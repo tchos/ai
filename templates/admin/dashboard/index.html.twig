@@ -13,7 +13,7 @@
                                 <i class="fas fa-users fa-3x"></i>
                             </div>
                             <div class="col-8">
-                                <h4 class="card-title">{{stats.users }} utilisateurs inscrits</h4>
+                                <h4 class="card-title">100 utilisateurs</h4>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                                 <i class="fas fa-folder-open fa-3x"></i>
                             </div>
                             <div class="col-8">
-                                <h4 class="card-title">{{ stats.actes }} actes de décès</h4>
+                                <h4 class="card-title">100 Pensions de réversion</h4>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                     <i class="fas fa-hotel fa-3x"></i>
                                 </div>
                                 <div class="col-8">
-                                    <h4 class="card-title">{{ stats.centres }} centres d'état civils</h4>
+                                    <h4 class="card-title">14 Pensions d'invalidité</h4>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                     <i class="fas fa-people-carry fa-3x"></i>
                                 </div>
                                 <div class="col-8">
-                                    <h4 class="card-title">{{ stats.equipes }} équipes de personnes</h4>
+                                    <h4 class="card-title">11 équipes de membres</h4>
                                 </div>
                             </div>
                         </div>
@@ -84,16 +84,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% set rang = 1 %}
-                            {% for statUser in userStats %}
-                                <tr>
-                                    <td class="text-center">{{ rang }}</td>
-                                    <td>{{ statUser.fullName }}</td>
-                                    <td class="text-center">{{ statUser.compteur }}</td>
-                                    <td class="text-center">{{ statUser.libelle }}</td>
-                                </tr>
-                                {% set rang = rang + 1 %}
-                            {% endfor %}
+                            
                         </tbody>
                     </table>
                 </div>

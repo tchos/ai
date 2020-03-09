@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}ACTE D'INVALIDITE DE {{ invalidite.matriculInv }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="h3">
+            Enregistrement de l'acte de réversion de {{ invalidite.nomAgentInvalide }} 
+            (<strong>{{ invalidite.matriculInv }}</strong>)
+        </h3>
+
+        {# Affichage du formulaire créé avec symfony#}
+        {{ form_start(form) }}
+            <h4 class="text-primary">
+                Veuillez saisir les informations telles que portées sur les actes
+                <span class="badge badge-primary float-right">COMPTEUR: 1000</span>
+            </h4>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.numActeInval) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.typeActeInv) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.dateSignatureInv) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.nomsInvActe) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.dateInvalidite) }}
+                </div>
+            </div>
+            <div class="alert alert-secondary clearfix">
+                <h3 class="alert-heading">Sauvegarder l'acte de réversion</h3>
+                <p>
+                    Vous êtes sur le point d'enregistrer les informations de l'acte octroyant une pension d'invalidité 
+                    à <span class="text-primary">{{ invalidite.nomAgentInvalide }}</span>, cliquez sur 
+                    le bouton "Enregistrer les informations" !
+                </p>
+                <button type="submit" class="btn btn-primary float-right">
+                    <i class="fas fa-check"></i>
+                    Enregistrer les informations
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

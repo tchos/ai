@@ -1,7 +1,7 @@
 security:
     encoders:
         App\Entity\User:
-        algorithm: bcrypt
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
@@ -13,6 +13,37 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        admin:
+            pattern: ^/admin
+            anonymous: true
+
+            provider: in_database
+
+            # pour se connecter: "admin_account_login" est la route du formulaire de connexion pour admin
+            form_login:
+                login_path: admin_account_login
+                check_path: admin_account_login
+
+            logout:
+                path: admin_account_logout
+                target: homepage
+        
+        main:
+            anonymous: lazy
+
+            # pour se connecter: "account_login" est la route du formulaire de connexion
+            provider: in_database
+
+            form_login:
+                login_path: account_login
+                check_path: account_login
+
+            # déconnexion: "account_logout" est la route de déconnexion qui nous redirigera vers la connexion
+            logout:
+                path: account_logout
+                target: homepage
+
+
 
         # activate different ways to authenticate
         # https://symfony.com/doc/current/security.html#firewalls-authentication

@@ -2,10 +2,20 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReversionRepository")
+ * @ORM\HasLifecycleCallbacks
+ * 
+ * L'acte d'une pension de réversion pour un agent doit être unique
+ * @UniqueEntity(
+ *      fields = {"numActeRevers", "nomsAdActe"},
+ *      message = "Cet acte de réversion a déjà été enregistré."
+ * )
  */
 class Reversion
 {
@@ -62,11 +72,6 @@ class Reversion
     private $dateAffectat;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $anEmb;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nomsAuteur;
@@ -103,6 +108,12 @@ class Reversion
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\GreaterThan(propertyPath="dateDeces", 
+     *  message="La date à laquelle a été signé l'acte ne peut être antérieur à la date de décès !")
+     * 
+     * @Assert\GreaterThan(propertyPath="dateNaisDerOrph", 
+     *  message="La date à laquelle a été signé l'acte ne peut être antérieur à la date de naissance 
+     * du dernier orphelin mineur !")
      */
     private $dateSignatureRev;
 
@@ -130,6 +141,28 @@ class Reversion
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reversions")
      */
     private $agentSaisie;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $aAffect;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance pour
+     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     * 
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function prePersist()
+    {
+        if(!empty($this->dateSaisieRevers))
+        {
+            $this->dateSaisieRevers = new \DateTime();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -244,17 +277,6 @@ class Reversion
         return $this;
     }
 
-    public function getAnEmb(): ?int
-    {
-        return $this->anEmb;
-    }
-
-    public function setAnEmb(?int $anEmb): self
-    {
-        $this->anEmb = $anEmb;
-
-        return $this;
-    }
 
     public function getNomsAuteur(): ?string
     {
@@ -408,6 +430,18 @@ class Reversion
     public function setAgentSaisie(?User $agentSaisie): self
     {
         $this->agentSaisie = $agentSaisie;
+
+        return $this;
+    }
+
+    public function getAAffect(): ?int
+    {
+        return $this->aAffect;
+    }
+
+    public function setAAffect(?int $aAffect): self
+    {
+        $this->aAffect = $aAffect;
 
         return $this;
     }

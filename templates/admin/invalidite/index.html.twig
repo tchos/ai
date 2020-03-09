@@ -1,0 +1,79 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Pension d'invalidité{% endblock %}
+
+{% block body %}
+    <div class="container-fluid my-5">
+        {{ form_start(form) }}
+            <h3 class="text-primary">
+                Recherche de l'agent invalide !
+            </h3>
+            <hr>
+            <div class="alert alert-secondary">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(form.nomAgentInvalide) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                            Rechercher
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        {{ form_end(form) }}
+        {% if inv is not null %}
+            <hr>
+            <h2 class="my-5">Agents invalides trouvés</h2>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center"><i class="fas fa-list-ol"></i> N°</th>
+                        <th class="text-center"><i class="fas fa-list-ol"></i> Matricule</th>
+                        <th><i class="fas fa-id-card"></i> Nom de l'agent invalide</th>
+                        <th class="text-center"><i class="fas fa-id-card"></i> Montant pension</th>
+                        <th class="text-center"><i class="fas fa-id-card"></i> Année d'affectation</th>
+                        <th class="text-center">Numéro de l'acte d'invalidité</th>
+                        <th class="text-center">Régulariser</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set i = 1 %}
+                    {% for invalidite in inv %}
+                        <tr>
+                            <td class="text-center">{{ i }}</td>
+                            <td class="text-center">{{ invalidite.matriculInv }}</td>
+                            <td>{{ invalidite.nomAgentInvalide }}</td>
+                            <td class="text-center">{{ invalidite.cc | number_format(1, ',', ' ') }}</td>
+                            <td class="text-center">{{ invalidite.aAffect }}</td>
+                            <td>{{ invalidite.numActeInval }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('admin_invalidite_edit', {'matriculInv': invalidite.matriculInv}) }}" 
+                                    class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% set i = i + 1 %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $("#search_reversion_nomsAyantDroit").autocomplete({
+                source: "pages/searchADContentieux.php",
+                minLength: 4
+            });
+        })
+    </script>
+{% endblock %}

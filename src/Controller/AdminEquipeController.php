@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class EquipeController extends AbstractController
+class AdminEquipeController extends AbstractController
 {
     /**
-     * @Route("/equipe/new", name="equipe_create")
+     * @Route("/admin/equipe/new", name="equipe_create")
      */
     public function index(Request $request, EntityManagerInterface $manager)
     {
@@ -31,7 +31,7 @@ class EquipeController extends AbstractController
             return $this->redirectToRoute('equipe_create');
         }
 
-        return $this->render('equipe/new.html.twig', [
+        return $this->render('admin/equipe/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

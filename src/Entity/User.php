@@ -5,11 +5,21 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
+ * 
+ * L'email doit être unique chez chaque user
+ * @UniqueEntity(
+ *      fields = {"email"},
+ *      message = "Un autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier."
+ * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -25,6 +35,7 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message = "{{ value }} n'est pas une adresse email valide !")
      */
     private $email;
 
@@ -32,6 +43,11 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
+
+    /**
+     *@Assert\EqualTo(propertyPath="hash", message="Les mots de passe entrés ne correspondent pas !")
+     */
+    public $passwordConfirm;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Equipe", inversedBy="users")
@@ -202,5 +218,36 @@ class User
         }
 
         return $this;
+    }
+
+    // Les fonction à implémenter pour l'interface UserInterface
+
+    public function getRoles()
+    {
+        $roles = $this->userRoles->map(function ($role) {
+            return $role->getTitle();
+        })->toArray();
+
+        $roles[] = 'ROLE_USER';
+
+        return $roles;
+    }
+
+    public function getPassword()
+    {
+        return $this->hash;
+    }
+
+    public function getSalt()
+    {
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
     }
 }

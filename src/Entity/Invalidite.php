@@ -86,6 +86,11 @@ class Invalidite
      */
     private $agentSaisie;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $aAffect;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -255,6 +260,18 @@ class Invalidite
     public function setAgentSaisie(?User $agentSaisie): self
     {
         $this->agentSaisie = $agentSaisie;
+
+        return $this;
+    }
+
+    public function getAAffect(): ?int
+    {
+        return $this->aAffect;
+    }
+
+    public function setAAffect(?int $aAffect): self
+    {
+        $this->aAffect = $aAffect;
 
         return $this;
     }

@@ -13,92 +13,36 @@ class Statistiques
         $this->manager = $manager;
     }
 
-    public function getStats()
+    /**
+     * Permet de rechercher une pension de réversion à partir de son nom
+     *
+     * @param [type] $ayantdroit
+     * @return Entity ayantdroit
+     */
+    public function findAyantDroit($ayantdroit)
     {
-        $users = $this->getUsersCount();
-        $actes = $this->getActesCount();
-        $centres = $this->getCentresCount();
-        $equipes = $this->getEquipesCount();
-
-        return compact('users', 'actes', 'centres', 'equipes');
+        return $this->manager->createQuery('
+            SELECT r 
+            FROM App\Entity\Reversion r
+            WHERE r.nomsAyantDroit LIKE :ayantdroit
+        ')->setParameter('ayantdroit', '%'.$ayantdroit.'%')
+          ->getResult();
     }
 
     /**
-     * Retourne le nombre de users inscrits
+     * Permet de rechercher une pension d'invalidité à partir du nom
      *
-     * @return Integer
+     * @param [type] $invalidite
+     * @return Entity invalidite
      */
-    public function getUsersCount()
+    public function findInvalidite($invalidite)
     {
-        return $this->manager->createQuery('SELECT COUNT(u) FROM App\Entity\User u')->getSingleScalarResult();
-    }
-
-    /**
-     * Retourne le nombre d'annonces enregistrées
-     *
-     * @return Integer
-     */
-    public function getActesCount()
-    {
-        return $this->manager->createQuery('SELECT COUNT(a) FROM App\Entity\ActeDeces a')
-                    ->getSingleScalarResult();
-    }
-
-    /**
-     * Retourne le nombre de réservations effectuées
-     *
-     * @return Integer
-     */
-    public function getCentresCount()
-    {
-        return $this->manager->createQuery('SELECT COUNT(c) FROM App\Entity\CentreEtatCivil c')
-                    ->getSingleScalarResult();
-    }
-
-    /**
-     * Retourne le nombre de commentaires effectuées
-     *
-     * @return Integer
-     */
-    public function getEquipesCount()
-    {
-        return $this->manager->createQuery('SELECT COUNT(e) FROM App\Entity\Equipe e')
-                    ->getSingleScalarResult();
-    }
-    
-    /**
-     * Retourne les statistiques de saisies par agents de saisie
-     *
-     * @return User
-     */
-    public function getUserStats($direction)
-    {
-        return $this->manager->createQuery(
-            'SELECT u.fullName as fullName, COUNT(a.numeroActe) as compteur, e.libelle as libelle
-            FROM App\Entity\User u
-            JOIN u.acteDeces a
-            JOIN u.equipe e
-            GROUP BY fullName
-            ORDER BY compteur '.$direction
-        )
+        return $this->manager->createQuery('
+            SELECT i
+            FROM App\Entity\Invalidite i
+            WHERE i.nomAgentInvalide LIKE :invalidite
+        ')->setParameter('invalidite', '%' . $invalidite . '%')
             ->getResult();
-    }
-
-    /**
-     * Retourne les statistiques de saisies de l'agent de saisie
-     *
-     * @return Integer
-     */
-    public function getCompteur($user)
-    {
-        return $this->manager->createQuery(
-            'SELECT COUNT(a.numeroActe) as compteur
-            FROM App\Entity\ActeDeces a
-            JOIN a.agentSaisie u
-            WHERE u = :user'
-        )
-            ->setParameter('user', $user)
-            ->getSingleScalarResult();
     }
 }
 
