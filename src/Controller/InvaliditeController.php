@@ -11,10 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AdminInvaliditeController extends AbstractController
+class InvaliditeController extends AbstractController
 {
     /**
-     * @Route("/admin/invalidite", name="admin_invalidite")
+     * @Route("/invalidite", name="invalidite_index")
      */
     public function index(Request $request, Statistiques $statistiques)
     {
@@ -24,8 +24,7 @@ class AdminInvaliditeController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $inval = $invalidite->getNomAgentInvalide();
             $inv = $statistiques->findInvalidite($inval);
         }
@@ -39,7 +38,7 @@ class AdminInvaliditeController extends AbstractController
     /**
      * Permet de régulariser une pension d'invalidité
      * 
-     * @Route("/admin/invalidite/{matriculInv}/edit", name="admin_invalidite_edit")
+     * @Route("/invalidite/{matriculInv}/edit", name="invalidite_edit")
      *
      * @param Invalidite $invalidite
      * @param EntityManagerInterface $manager
@@ -51,17 +50,17 @@ class AdminInvaliditeController extends AbstractController
         $form = $this->createForm(InvaliditeType::class, $invalidite);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $invalidite->setAgentSaisie($this->getUser())
-                       ->setResultat(4)
-            ;
+                ->setResultat(4);
             $manager->persist($invalidite);
             $manager->flush();
 
-            $this->addFlash("success",
-            "L'acte octroyant la pension d'invalidité à <strong>{$invalidite->getNomAgentInvalide()}
-            ({$invalidite->getMatriculInv()})</strong> a été enregistré avec succès.");
+            $this->addFlash(
+                "success",
+                "L'acte octroyant la pension d'invalidité à <strong>{$invalidite->getNomAgentInvalide()}
+            ({$invalidite->getMatriculInv()})</strong> a été enregistré avec succès."
+            );
 
             return $this->redirectToRoute('admin_invalidite');
         }
@@ -70,6 +69,5 @@ class AdminInvaliditeController extends AbstractController
             'invalidite' => $invalidite,
             'form' => $form->createView()
         ]);
-
     }
 }

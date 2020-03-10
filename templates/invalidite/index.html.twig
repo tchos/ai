@@ -1,4 +1,4 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Pension d'invalidité{% endblock %}
 
@@ -53,7 +53,7 @@
                             <td class="text-center">{{ invalidite.aAffect }}</td>
                             <td>{{ invalidite.numActeInval }}</td>
                             <td class="text-center">
-                                <a href="{{ path('admin_invalidite_edit', {'matriculInv': invalidite.matriculInv}) }}" 
+                                <a href="{{ path('invalidite_edit', {'matriculInv': invalidite.matriculInv}) }}" 
                                     class="btn btn-primary">
                                     <i class="fas fa-edit"></i>
                                 </a>
