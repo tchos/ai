@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\IsNull;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InvaliditeRepository")
@@ -90,6 +91,27 @@ class Invalidite
      * @ORM\Column(type="integer", nullable=true)
      */
     private $aAffect;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateSaisieInval;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer un acte d'invalidité pour
+     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     * 
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function prePersist()
+    {
+        if (empty($this->dateSaisieInval) || $this->dateSaisieInval === null) {
+            $this->dateSaisieInval = new \DateTime();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -272,6 +294,18 @@ class Invalidite
     public function setAAffect(?int $aAffect): self
     {
         $this->aAffect = $aAffect;
+
+        return $this;
+    }
+
+    public function getDateSaisieInval(): ?\DateTimeInterface
+    {
+        return $this->dateSaisieInval;
+    }
+
+    public function setDateSaisieInval(?\DateTimeInterface $dateSaisieInval): self
+    {
+        $this->dateSaisieInval = $dateSaisieInval;
 
         return $this;
     }

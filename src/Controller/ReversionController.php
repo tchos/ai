@@ -9,13 +9,14 @@ use App\Form\SearchReversionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReversionController extends AbstractController
 {
     /**
      * @Route("reversion", name="reversion_index")
-     * @IsGranted('ROLE_USER')
+     * @IsGranted("ROLE_USER")
      */
     public function index(Request $request, Statistiques $statistiques)
     {
@@ -30,23 +31,23 @@ class ReversionController extends AbstractController
             $ay = $statistiques->findAyantDroit($ayantDroit);
         }
 
-        $userStats = $statistiques->getUserStats('DESC');
-
         return $this->render('reversion/index.html.twig', [
             'ay' => $ay,
             'form' => $form->createView(),
-            'userStats' => $userStats
+            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser()),
         ]);
     }
 
     /**
      * Permet de mettre à jour un acte
      * @Route("reversion/{matricul}/edit", name="reversion_edit")
-     * @IsGranted('ROLE_USER')
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */
-    public function updateReversion(EntityManagerInterface $manager, Request $request, Reversion $reversion)
+    public function updateReversion(EntityManagerInterface $manager, Request $request, Reversion $reversion,
+        Statistiques $statistiques)
     {
         $form = $this->createForm(ReversionType::class, $reversion);
 
@@ -54,7 +55,8 @@ class ReversionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reversion->setAgentSaisie($this->getUser())
-                ->setResultat(4);
+                      ->setDateSaisieRevers(new \DateTime())
+                      ->setResultat(4);
 
             $manager->persist($reversion);
             $manager->flush();
@@ -71,6 +73,8 @@ class ReversionController extends AbstractController
         return $this->render("reversion/edit.html.twig", [
             'reversion' => $reversion,
             'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser())
         ]);
     }
 }

@@ -32,7 +32,8 @@ class AdminReversionController extends AbstractController
         
         return $this->render('admin/reversion/index.html.twig', [
             'ay' => $ay,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurReversion($this->getUser())
         ]);
     }
 
@@ -42,7 +43,8 @@ class AdminReversionController extends AbstractController
      *
      * @return Response
      */
-    public function updateReversion(EntityManagerInterface $manager, Request $request, Reversion $reversion)
+    public function updateReversion(EntityManagerInterface $manager, Request $request, Reversion $reversion,
+        Statistiques $statistiques)
     {
         $form = $this->createForm(ReversionType::class, $reversion);
 
@@ -67,6 +69,7 @@ class AdminReversionController extends AbstractController
         return $this->render("admin/reversion/edit.html.twig", [
             'reversion' => $reversion,
             'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurReversion($this->getUser())
         ]);
     }
 }

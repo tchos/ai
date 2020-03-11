@@ -4,18 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Invalidite;
 use App\Form\InvaliditeType;
-use App\Form\SearchInvaliditeType;
 use App\Service\Statistiques;
+use App\Form\SearchInvaliditeType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class InvaliditeController extends AbstractController
 {
     /**
      * @Route("/invalidite", name="invalidite_index")
-     * @IsGranted('ROLE_USER')
+     * @IsGranted("ROLE_USER")
      */
     public function index(Request $request, Statistiques $statistiques)
     {
@@ -32,7 +33,9 @@ class InvaliditeController extends AbstractController
 
         return $this->render('invalidite/index.html.twig', [
             'inv' => $inv,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
     }
 
@@ -40,21 +43,24 @@ class InvaliditeController extends AbstractController
      * Permet de régulariser une pension d'invalidité
      * 
      * @Route("/invalidite/{matriculInv}/edit", name="invalidite_edit")
-     * @IsGranted('ROLE_USER')
+     * @IsGranted("ROLE_USER")
      *
      * @param Invalidite $invalidite
      * @param EntityManagerInterface $manager
      * @param Request $request
      * @return void
      */
-    public function updateInvalidite(Invalidite $invalidite, EntityManagerInterface $manager, Request $request)
+    public function updateInvalidite(Invalidite $invalidite, EntityManagerInterface $manager, Request $request,
+        Statistiques $statistiques)
     {
         $form = $this->createForm(InvaliditeType::class, $invalidite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $invalidite->setAgentSaisie($this->getUser())
-                ->setResultat(4);
+                       ->setDateSaisieInval(new \DateTime())
+                       ->setResultat(4)
+            ;
             $manager->persist($invalidite);
             $manager->flush();
 
@@ -69,7 +75,9 @@ class InvaliditeController extends AbstractController
 
         return $this->render("invalidite/edit.html.twig", [
             'invalidite' => $invalidite,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
     }
 }

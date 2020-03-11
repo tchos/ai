@@ -32,7 +32,8 @@ class AdminInvaliditeController extends AbstractController
 
         return $this->render('admin/invalidite/index.html.twig', [
             'inv' => $inv,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser())
         ]);
     }
 
@@ -46,7 +47,8 @@ class AdminInvaliditeController extends AbstractController
      * @param Request $request
      * @return void
      */
-    public function updateInvalidite(Invalidite $invalidite, EntityManagerInterface $manager, Request $request)
+    public function updateInvalidite(Invalidite $invalidite, EntityManagerInterface $manager, Request $request,
+        Statistiques $statistiques)
     {
         $form = $this->createForm(InvaliditeType::class, $invalidite);
         $form->handleRequest($request);
@@ -68,7 +70,8 @@ class AdminInvaliditeController extends AbstractController
 
         return $this->render("admin/invalidite/edit.html.twig", [
             'invalidite' => $invalidite,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser())
         ]);
 
     }

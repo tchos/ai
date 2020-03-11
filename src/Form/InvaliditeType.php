@@ -28,8 +28,8 @@ class InvaliditeType extends ApplicationType
             ->add('nomsInvActe',
                 TextType::class,
                 $this->getConfiguration(
-                    "Numéro de l'acte attribuant la pension d'invalidité",
-                    "Ex: 14001247/AM/MINDEF/02214"
+                    "Noms et prénoms de l'agent invalide tel que portés sur l'acte",
+                    "Ex: SAMSON MANUE"
                 ))
             ->add('dateInvalidite', DateType::class, ['widget' => 'single_text'])
         ;

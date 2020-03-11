@@ -13,7 +13,8 @@
         {{ form_start(form) }}
             <h4 class="text-primary">
                 Veuillez saisir les informations telles que portées sur les actes
-                <span class="badge badge-primary float-right">COMPTEUR: 1000</span>
+                <span class="badge badge-dark float-right">TOTAL D'INVALIDITE: {{ compteur }}</span>
+                <span class="badge badge-dark float-right mr-3">INVALIDITE DU JOUR: {{ compteurDuJour }}</span>
             </h4>
             <hr>
             <div class="row">
