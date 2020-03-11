@@ -15,6 +15,7 @@ class ReversionController extends AbstractController
 {
     /**
      * @Route("reversion", name="reversion_index")
+     * @IsGranted('ROLE_USER')
      */
     public function index(Request $request, Statistiques $statistiques)
     {
@@ -41,6 +42,7 @@ class ReversionController extends AbstractController
     /**
      * Permet de mettre à jour un acte
      * @Route("reversion/{matricul}/edit", name="reversion_edit")
+     * @IsGranted('ROLE_USER')
      *
      * @return Response
      */
@@ -63,7 +65,7 @@ class ReversionController extends AbstractController
                 été enregistré avec succès. "
             );
 
-            return $this->redirectToRoute("admin_reversion");
+            return $this->redirectToRoute("reversion_index");
         }
 
         return $this->render("reversion/edit.html.twig", [

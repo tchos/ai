@@ -15,6 +15,7 @@ class InvaliditeController extends AbstractController
 {
     /**
      * @Route("/invalidite", name="invalidite_index")
+     * @IsGranted('ROLE_USER')
      */
     public function index(Request $request, Statistiques $statistiques)
     {
@@ -29,7 +30,7 @@ class InvaliditeController extends AbstractController
             $inv = $statistiques->findInvalidite($inval);
         }
 
-        return $this->render('admin/invalidite/index.html.twig', [
+        return $this->render('invalidite/index.html.twig', [
             'inv' => $inv,
             'form' => $form->createView()
         ]);
@@ -39,6 +40,7 @@ class InvaliditeController extends AbstractController
      * Permet de régulariser une pension d'invalidité
      * 
      * @Route("/invalidite/{matriculInv}/edit", name="invalidite_edit")
+     * @IsGranted('ROLE_USER')
      *
      * @param Invalidite $invalidite
      * @param EntityManagerInterface $manager
@@ -62,10 +64,10 @@ class InvaliditeController extends AbstractController
             ({$invalidite->getMatriculInv()})</strong> a été enregistré avec succès."
             );
 
-            return $this->redirectToRoute('admin_invalidite');
+            return $this->redirectToRoute('invalidite_index');
         }
 
-        return $this->render("admin/invalidite/edit.html.twig", [
+        return $this->render("invalidite/edit.html.twig", [
             'invalidite' => $invalidite,
             'form' => $form->createView()
         ]);
