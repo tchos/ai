@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques de saisies{% endblock %}
+
+{% block body %}
+    <div class="container-fluid my-3">
+        <div class="row">
+            <div class="col">
+                <div class="card bg-ligth text-primary mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-restroom fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{ regulRevers }} Pensions de réversion régularisées</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card bg-ligth text-primary mb-3 text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <i class="fas fa-blind fa-3x"></i>
+                            </div>
+                            <div class="col-8">
+                                <h4 class="card-title">{{ regulInval }} Pensions d'invalidité régularisées</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-secondary">
+                    <h3 class="alert-heading my-3">
+                        <i class="fas fa-arrow-up"></i>
+                        Statistiques des saisies par utilisateurs
+                    </h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="table-active">
+                                <th class="text-center"><i class="fas fa-sort-up"></i> Rang</th>
+                                <th><i class="fas fa-address-card"></i> Noms et prénoms</th>
+                                <th class="text-center">Equipe</th>
+                                <th class="text-center"><i class="fas fa-coins"></i> Pensions de réversion</th>
+                                <th class="text-center"><i class="fas fa-coins"></i> Pensions d'invalidité</th>
+                                <th class="text-center"><i class="fas fa-coins"></i> Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set rang = 1 %}
+                            {% for statUser in userStats %}
+                                <tr>
+                                    <td class="text-center">{{ rang }}</td>
+                                    <td>{{ statUser.fullName }}</td>
+                                    <td class="text-center">{{ statUser.libelle }}</td>
+                                    <td class="text-center">{{ statUser.nbReversion }}</td>
+                                    <td class="text-center">{{ statUser.nbInvalidite }}</td>
+                                    <td class="text-center">{{ statUser.total }}</td>
+                                </tr>
+                                {% set rang = rang + 1 %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

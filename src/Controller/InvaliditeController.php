@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Invalidite;
+use App\Service\Paginator;
 use App\Form\InvaliditeType;
 use App\Service\Statistiques;
 use App\Form\SearchInvaliditeType;
@@ -15,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class InvaliditeController extends AbstractController
 {
     /**
-     * @Route("/invalidite", name="invalidite_index")
+     * @Route("/invalidite/index", name="invalidite_index")
      * @IsGranted("ROLE_USER")
      */
     public function index(Request $request, Statistiques $statistiques)
@@ -58,7 +59,7 @@ class InvaliditeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $invalidite->setAgentSaisie($this->getUser())
-                       ->setDateSaisieInval(new \DateTime())
+                       ->setDateSaisie(new \DateTime())
                        ->setResultat(4)
             ;
             $manager->persist($invalidite);
@@ -76,6 +77,31 @@ class InvaliditeController extends AbstractController
         return $this->render("invalidite/edit.html.twig", [
             'invalidite' => $invalidite,
             'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
+        ]);
+    }
+
+    /**
+     * Permet de voir les saisies effectuées par l'agent de saisie
+     *
+     * @Route("invalidite/{page<\d+>?1}", name="invalidite_show")
+     * @IsGranted("ROLE_USER")
+     * 
+     * @param Paginator $paginator
+     * @param [type] $page
+     * @param Statistiques $statistiques
+     * @return void
+     */
+    public function show(Paginator $paginator, $page, Statistiques $statistiques)
+    {
+        $paginator->setEntityClass(Invalidite::class)
+            ->setUser($this->getUser())
+            ->setPage($page)
+            ->setLimit(10);
+
+        return $this->render("invalidite/show.html.twig", [
+            'paginator' => $paginator,
             'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
             'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);

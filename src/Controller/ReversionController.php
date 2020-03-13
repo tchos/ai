@@ -6,7 +6,9 @@ use App\Entity\Reversion;
 use App\Form\ReversionType;
 use App\Service\Statistiques;
 use App\Form\SearchReversionType;
+use App\Service\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Stmt\Static_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -15,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ReversionController extends AbstractController
 {
     /**
-     * @Route("reversion", name="reversion_index")
+     * @Route("/reversion/search", name="reversion_index")
      * @IsGranted("ROLE_USER")
      */
     public function index(Request $request, Statistiques $statistiques)
@@ -55,7 +57,7 @@ class ReversionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reversion->setAgentSaisie($this->getUser())
-                      ->setDateSaisieRevers(new \DateTime())
+                      ->setDateSaisie(new \DateTime())
                       ->setResultat(4);
 
             $manager->persist($reversion);
@@ -75,6 +77,32 @@ class ReversionController extends AbstractController
             'form' => $form->createView(),
             'compteur' => $statistiques->getCompteurReversion($this->getUser()),
             'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser())
+        ]);
+    }
+
+    /**
+     * Permet de voir les saisies effectuées par l'agent de saisie
+     *
+     * @Route("reversion/{page<\d+>?1}", name="reversion_show")
+     * @IsGranted("ROLE_USER")
+     * 
+     * @param Paginator $paginator
+     * @param [type] $page
+     * @param Statistiques $statistiques
+     * @return void
+     */
+    public function show(Paginator $paginator, $page, Statistiques $statistiques)
+    {
+        $paginator->setEntityClass(Reversion::class)
+                  ->setUser($this->getUser())
+                  ->setPage($page)
+                  ->setLimit(10)
+        ;
+
+        return $this->render("reversion/show.html.twig", [
+            'paginator' => $paginator,
+            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
     }
 }

@@ -95,7 +95,7 @@ class Invalidite
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateSaisieInval;
+    private $dateSaisie;
 
     /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte d'invalidité pour
@@ -108,8 +108,8 @@ class Invalidite
      */
     public function prePersist()
     {
-        if (empty($this->dateSaisieInval) || $this->dateSaisieInval === null) {
-            $this->dateSaisieInval = new \DateTime();
+        if (empty($this->dateSaisie) || $this->dateSaisie === null) {
+            $this->dateSaisie = new \DateTime();
         }
     }
 
@@ -298,14 +298,14 @@ class Invalidite
         return $this;
     }
 
-    public function getDateSaisieInval(): ?\DateTimeInterface
+    public function getDateSaisie(): ?\DateTimeInterface
     {
-        return $this->dateSaisieInval;
+        return $this->dateSaisie;
     }
 
-    public function setDateSaisieInval(?\DateTimeInterface $dateSaisieInval): self
+    public function setDateSaisie(?\DateTimeInterface $dateSaisie): self
     {
-        $this->dateSaisieInval = $dateSaisieInval;
+        $this->dateSaisie = $dateSaisie;
 
         return $this;
     }

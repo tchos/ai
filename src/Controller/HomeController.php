@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Service\Paginator;
+use App\Service\Statistiques;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,8 +16,23 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return $this->render('home/home.html.twig', [
-            
+        return $this->render('home/home.html.twig');
+    }
+
+    /**
+     * Permet de voir les statistiques de saisies de tous les utilisateurs
+     * 
+     * @Route("/statistiques", name="statistiques")
+     *
+     * @param Statistiques $statistiques
+     * @return void
+     */
+    public function voirSaisie(Statistiques $statistiques)
+    {
+        return $this->render("home/stat.html.twig", [
+            'userStats' => $statistiques->getUserStats('DESC'),
+            'regulRevers' => $statistiques->getCountRegulReversion(),
+            'regulInval' => $statistiques->getCountRegulInvalidite()
         ]);
     }
 }

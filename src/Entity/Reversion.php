@@ -125,7 +125,7 @@ class Reversion
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateSaisieRevers;
+    private $dateSaisie;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -158,9 +158,9 @@ class Reversion
      */
     public function prePersist()
     {
-        if(!empty($this->dateSaisieRevers))
+        if(!empty($this->dateSaisie))
         {
-            $this->dateSaisieRevers = new \DateTime();
+            $this->dateSaisie = new \DateTime();
         }
     }
 
@@ -386,14 +386,14 @@ class Reversion
         return $this;
     }
 
-    public function getDateSaisieRevers(): ?\DateTimeInterface
+    public function getDateSaisie(): ?\DateTimeInterface
     {
-        return $this->dateSaisieRevers;
+        return $this->dateSaisie;
     }
 
-    public function setDateSaisieRevers(?\DateTimeInterface $dateSaisieRevers): self
+    public function setDateSaisie(?\DateTimeInterface $dateSaisie): self
     {
-        $this->dateSaisieRevers = $dateSaisieRevers;
+        $this->dateSaisie = $dateSaisie;
 
         return $this;
     }

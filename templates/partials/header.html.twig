@@ -25,7 +25,7 @@
                         <i class="fas fa-laptop"></i>
                         Saisir pension de réversion
                     </a>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{ path('reversion_show') }}">
                         <i class="fas fa-eye"></i>
                         Voir mes saisies
                     </a>
@@ -43,14 +43,14 @@
                         <i class="fas fa-laptop"></i>
                         Saisir pension d'invalidité
                     </a>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{ path('invalidite_show') }}">
                         <i class="fas fa-eye"></i>
                         Voir mes saisies
                     </a>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link taille" href="#">
+                <a class="nav-link taille" href="{{ 'statistiques' }}">
                     <i class="fas fa-chart-bar"></i>
                     Statistiques de saisie
                 </a>

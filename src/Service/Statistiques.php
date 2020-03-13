@@ -55,8 +55,9 @@ class Statistiques
     public function getUserStats($direction)
     {
         return $this->manager->createQuery(
-            'SELECT u.fullName as fullName, COUNT(r.numActeRevers) as nbReversion,
-                COUNT(i.numActeInval) as nbInvalidite, COUNT(r.numActeRevers) + COUNT(i.numActeInval) AS total,
+            'SELECT u.fullName AS fullName, COUNT(DISTINCT r.numActeRevers) AS nbReversion,
+                COUNT(DISTINCT i.numActeInval) AS nbInvalidite, 
+                COUNT(DISTINCT r.numActeRevers) + COUNT(DISTINCT i.numActeInval) AS total,
                  e.libelle as libelle
             FROM App\Entity\User u
             JOIN u.reversions r
@@ -98,7 +99,7 @@ class Statistiques
             'SELECT COUNT(r.numActeRevers) as compteurDuJour
             FROM App\Entity\Reversion r
             JOIN r.agentSaisie u
-            WHERE CURRENT_DATE() <= r.dateSaisieRevers AND u = :user'
+            WHERE CURRENT_DATE() <= r.dateSaisie AND u = :user'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -134,10 +135,40 @@ class Statistiques
             'SELECT COUNT(i.numActeInval) as compteurDuJour
             FROM App\Entity\Invalidite i
             JOIN i.agentSaisie u
-            WHERE CURRENT_DATE() <= i.dateSaisieInval AND u = :user'
+            WHERE CURRENT_DATE() <= i.dateSaisie AND u = :user'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
+    }
+
+    /**
+     * Nombre de réversions régularisés
+     *
+     * @return Integer
+     */
+    public function getCountRegulReversion()
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(r.numActeRevers) AS nbReversRegul
+             FROM App\Entity\Reversion r
+             WHERE r.resultat = 4'
+        )
+        ->getSingleScalarResult();
+    }
+
+    /**
+     * Nombre d'invalidités régularisées
+     *
+     * @return Integer
+     */
+    public function getCountRegulInvalidite()
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(i.numActeInval) AS nbInvalRegul
+             FROM App\Entity\Invalidite i
+             WHERE i.resultat = 4'
+        )
+        ->getSingleScalarResult();
     }
 }
 

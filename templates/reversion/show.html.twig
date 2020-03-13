@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saisies effectuées{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h3 class="my-5 text-primary">
+            Gestion des actes de pensions de réversion
+            <span class="badge badge-dark float-right">TOTAL DE REVERSIONS: {{ compteur }}</span>
+            <span class="badge badge-dark float-right mr-3">REVERSIONS DU JOUR: {{ compteurDuJour }}</span>
+        </h3>
+        <hr>
+
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-active">
+                    <th class="text-center"><i class="fas fa-list-ol"></i> N°</th>
+                    <th>Numéro acte de réversion</th>
+                    <th class="text-center"><i class="fas fa-id-card"></i> Mle auteur de droit</th>
+                    <th><i class="fas fa-calendar"></i> Noms auteur de droit</th>
+                    <th><i class="fas fa-calendar"></i> Noms ayant droit</th>
+                    <th class="text-center"><i class="fas fa-calendar-check"></i> Date de saisie</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set i = 1 %}
+                {% set reversions = paginator.data %}
+                {% for reversion in reversions %}
+                    <tr>
+                        <td class="text-center">{{ i }}</td>
+                        <td>{{ reversion.numActeRevers }}</td>
+                        <td class="text-center">{{ reversion.matriculeAuteur }}</td>
+                        <td>{{ reversion.nomsAuteur }}</td>
+                        <td>{{ reversion.nomsAdActe }}</td>
+                        <td class="text-center">{{ reversion.dateSaisie | date("d/m/Y") }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('reversion_edit', {'matricul': reversion.matricul}) }}" 
+                                class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% set i = i + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {# service de pagination: voir le template pagination.html.twig et le service paginator.php #}
+        {{ paginator.display() }}
+    </div>
+{% endblock %}

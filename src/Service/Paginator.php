@@ -9,7 +9,7 @@ use Twig\Environment;
 class Paginator
 {
     private $entityClass;
-    private $limit = 50;
+    private $limit = 10;
     private $currentPage = 1;
     private $manager;
     private $twig;
@@ -57,7 +57,7 @@ class Paginator
         $repo = $this->manager->getRepository($this->entityClass);
 
         if(!empty($this->user))
-            $total = count($repo->findBy(['agentSaisie' => $this->user], []));
+            $total = count($repo->findBy(['agentSaisie' => $this->user], ['dateSaisie' => 'DESC'], 50));
         else
             $total = count($repo->findAll());
 
