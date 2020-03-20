@@ -74,6 +74,7 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Vous devez entrer le nom de l'auteur de droit.")
      */
     private $nomsAuteur;
 
@@ -103,6 +104,7 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Vous devez entrer le numéro de l'acte attribuant la pension de réversion.")
      */
     private $numActeRevers;
 

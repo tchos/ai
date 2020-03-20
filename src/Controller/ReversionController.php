@@ -77,7 +77,8 @@ class ReversionController extends AbstractController
 
             $this->addFlash(
                 "success",
-                "L'acte octroyant la pension de reversion à <strong>{$reversion->getNomsAyantDroit()}</strong> a 
+                "L'acte octroyant la pension de reversion à <strong>{$reversion->getNomsAyantDroit()}
+                ({$reversion->getMatricul()})</strong> a 
                 été enregistré avec succès. "
             );
 
@@ -114,7 +115,7 @@ class ReversionController extends AbstractController
         return $this->render("reversion/show.html.twig", [
             'paginator' => $paginator,
             'compteur' => $statistiques->getCompteurReversion($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
+            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser())
         ]);
     }
 

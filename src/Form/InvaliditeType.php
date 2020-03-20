@@ -24,14 +24,20 @@ class InvaliditeType extends ApplicationType
                         'Décision régionale' => 'Décision régionale'
                     ]
                 ])
-            ->add('dateSignatureInv', DateType::class, ['widget' => 'single_text'])
+            ->add('dateSignatureInv', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/MM/yyyy'])
             ->add('nomsInvActe',
                 TextType::class,
                 $this->getConfiguration(
                     "Noms et prénoms de l'agent invalide tel que portés sur l'acte",
                     "Ex: SAMSON MANUE"
                 ))
-            ->add('dateInvalidite', DateType::class, ['widget' => 'single_text'])
+            ->add('dateInvalidite', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/MM/yyyy'])
         ;
     }
 

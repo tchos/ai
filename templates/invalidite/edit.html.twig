@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.min.css"/>
+{% endblock %}
+
 {% block title %}ACTE D'INVALIDITE DE {{ invalidite.matriculInv }}{% endblock %}
 
 {% block body %}
@@ -52,4 +56,16 @@
             </div>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#invalidite_dateSignatureInv, #invalidite_dateInvalidite').datepicker({
+				todayHighlight: true,
+                format: 'dd/mm/yyyy',
+            });
+        })
+    </script>
 {% endblock %}

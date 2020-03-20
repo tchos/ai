@@ -23,7 +23,10 @@ class ReversionType extends ApplicationType
                         'ASCENDANT' => 'ASCENDANT'
                     ]
                 ])
-            ->add('dateNaisDerOrph', DateType::class, ['widget' => 'single_text'])
+            ->add('dateNaisDerOrph', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/MM/yyyy'])
             ->add('nomsAuteur', TextType::class,
                 $this->getConfiguration("Nom de l'auteur de droit",
                     "Ex: DIPANDA BOKENGUE BERTHE"))
@@ -79,7 +82,10 @@ class ReversionType extends ApplicationType
                     'TAMPON' => 'TAMPON'
                 ]
             ])
-            ->add('dateDeces', DateType::class, ['widget' => 'single_text'])
+            ->add('dateDeces', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/MM/yyyy'])
             ->add('nomsAdActe', TextType::class,
                 $this->getConfiguration( "Nom de l'ayant droit tel que porté sur l'acte",
                 "Ex: DIPANDA BOKENGUE BERTHE"))
@@ -92,7 +98,10 @@ class ReversionType extends ApplicationType
                     'Décision régionale' => 'Décision régionale'
                 ]
             ])
-            ->add('dateSignatureRev', DateType::class, ['widget' => 'single_text'])
+            ->add('dateSignatureRev', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/MM/yyyy'])
         ;
     }
 
