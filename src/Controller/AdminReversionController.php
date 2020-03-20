@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reversion;
+use App\Service\Paginator;
 use App\Form\ReversionType;
 use App\Service\Statistiques;
 use App\Form\SearchReversionType;
@@ -14,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminReversionController extends AbstractController
 {
     /**
-     * @Route("admin/reversion", name="admin_reversion")
+     * @Route("admin/reversion/index", name="admin_reversion")
      */
     public function index(Request $request, Statistiques $statistiques)
     {
@@ -28,12 +29,20 @@ class AdminReversionController extends AbstractController
         {
             $ayantDroit = $reversion->getNomsAyantDroit();
             $ay = $statistiques->findAyantDroit($ayantDroit);
+            if (empty($ay)) {
+                $this->addFlash(
+                    "danger",
+                    "<strong>".$ayantDroit ."</strong> n'a pas été trouvé dans la base des ayants droit appelés à clarifier 
+                    leur situation"
+                );
+            }
         }
         
         return $this->render('admin/reversion/index.html.twig', [
             'ay' => $ay,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurReversion($this->getUser())
+            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser())
         ]);
     }
 
@@ -69,7 +78,32 @@ class AdminReversionController extends AbstractController
         return $this->render("admin/reversion/edit.html.twig", [
             'reversion' => $reversion,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurReversion($this->getUser())
+            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser())
+        ]);
+    }
+
+    /**
+     * Permet de voir les saisies effectuées par l'agent de saisie
+     *
+     * @Route("admin/reversion/{page<\d+>?1}", name="admin_reversion_show")
+     * 
+     * @param Paginator $paginator
+     * @param [type] $page
+     * @param Statistiques $statistiques
+     * @return void
+     */
+    public function show(Paginator $paginator, $page, Statistiques $statistiques)
+    {
+        $paginator->setEntityClass(Reversion::class)
+            ->setUser($this->getUser())
+            ->setPage($page)
+            ->setLimit(10);
+
+        return $this->render("admin/reversion/show.html.twig", [
+            'paginator' => $paginator,
+            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
     }
 }

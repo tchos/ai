@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des équipes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h3 class="mt-5 text-primary">
+            Gestion des équipes
+        </h3>
+        <hr>
+
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-active">
+                    <th class="text-center"><i class="fas fa-list-ol"></i> N°</th>
+                    <th>Libellé</th>
+                    <th class="text-center"><i class="fas fa-id-card"></i> Mission</th>
+                    <th><i class="fas fa-calendar"></i> Responsable</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set i = 1 %}
+                {% for equipe in equipes %}
+                    <tr>
+                        <td class="text-center">{{ i }}</td>
+                        <td>{{ equipe.libelle }}</td>
+                        <td class="text-center">{{ equipe.mission }}</td>
+                        <td>{{ equipe.responsable }}</td>
+                        <td class="text-center">
+                            <a href="#" 
+                                class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% set i = i + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

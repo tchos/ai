@@ -3,18 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Invalidite;
+use App\Service\Paginator;
 use App\Form\InvaliditeType;
-use App\Form\SearchInvaliditeType;
 use App\Service\Statistiques;
+use App\Form\SearchInvaliditeType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminInvaliditeController extends AbstractController
 {
     /**
-     * @Route("/admin/invalidite", name="admin_invalidite")
+     * @Route("/admin/invalidite/index", name="admin_invalidite")
      */
     public function index(Request $request, Statistiques $statistiques)
     {
@@ -28,12 +29,20 @@ class AdminInvaliditeController extends AbstractController
         {
             $inval = $invalidite->getNomAgentInvalide();
             $inv = $statistiques->findInvalidite($inval);
+            if (empty($inv)) {
+                $this->addFlash(
+                    "danger",
+                    "<strong>" . $inval . "</strong> n'a pas été trouvé dans la base des pensionnés
+                    d'invalidité appelés à clarifier leur situation."
+                );
+            }
         }
 
         return $this->render('admin/invalidite/index.html.twig', [
             'inv' => $inv,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurInvalidite($this->getUser())
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
     }
 
@@ -71,8 +80,33 @@ class AdminInvaliditeController extends AbstractController
         return $this->render("admin/invalidite/edit.html.twig", [
             'invalidite' => $invalidite,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurInvalidite($this->getUser())
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
 
+    }
+
+    /**
+     * Permet de voir les saisies effectuées par l'agent de saisie
+     *
+     * @Route("admin/invalidite/{page<\d+>?1}", name="admin_invalidite_show")
+     * 
+     * @param Paginator $paginator
+     * @param [type] $page
+     * @param Statistiques $statistiques
+     * @return void
+     */
+    public function show(Paginator $paginator, $page, Statistiques $statistiques)
+    {
+        $paginator->setEntityClass(Invalidite::class)
+            ->setUser($this->getUser())
+            ->setPage($page)
+            ->setLimit(10);
+
+        return $this->render("admin/invalidite/show.html.twig", [
+            'paginator' => $paginator,
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
+        ]);
     }
 }

@@ -30,6 +30,13 @@ class InvaliditeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $inval = $invalidite->getNomAgentInvalide();
             $inv = $statistiques->findInvalidite($inval);
+            if (empty($inv)) {
+                $this->addFlash(
+                    "danger",
+                    "<strong>" . $inval . "</strong> n'a pas été trouvé dans la base des pensionnés 
+                    d'invalidité appelés à clarifier leur situation."
+                );
+            }
         }
 
         return $this->render('invalidite/index.html.twig', [

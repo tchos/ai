@@ -1,19 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}ACTE DE REVERSION DE {{ reversion.matricul }}{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h3 class="h3">
+        <h3 class="h3 text-primary mb-4">
             Enregistrement de l'acte de réversion de {{ reversion.nomsAyantDroit }} 
             (<strong>{{ reversion.matricul }}</strong>)
         </h3>
 
         {# Affichage du formulaire créé avec symfony#}
         {{ form_start(form) }}
-            <h4 class="text-primary">
+            <h4 class="text-dark">
                 Veuillez saisir les informations telles que portées sur les actes
-                <span class="badge badge-primary float-right">COMPTEUR: 1000</span>
+                <span class="badge badge-primary float-right">TOTAL DE REVERSIONS: {{ compteur }}</span>
+                <span class="badge badge-primary float-right mr-3">REVERSIONS DU JOUR: {{ compteurDuJour }}</span>
             </h4>
             <hr>
             <div class="row">

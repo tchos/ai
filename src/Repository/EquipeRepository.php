@@ -19,6 +19,16 @@ class EquipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipe::class);
     }
 
+    /**
+     * Liste des équipes
+     *
+     * @return Equipe[]
+     */
+    public function findAllEquipe()
+    {
+        return $this->createQueryBuilder('e')->orderBy('e.libelleEquipe', 'ASC')->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Equipe[] Returns an array of Equipe objects
     //  */

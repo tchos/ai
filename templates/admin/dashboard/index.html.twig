@@ -13,7 +13,7 @@
                                 <i class="fas fa-users fa-3x"></i>
                             </div>
                             <div class="col-8">
-                                <h4 class="card-title">100 utilisateurs</h4>
+                                <h4 class="card-title">{{ stats.nbUsers }} utilisateurs inscrits</h4>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                                 <i class="fas fa-folder-open fa-3x"></i>
                             </div>
                             <div class="col-8">
-                                <h4 class="card-title">100 Pensions de réversion</h4>
+                                <h4 class="card-title">{{ stats.nbReversRegul }} Pensions de réversion</h4>
                             </div>
                         </div>
                     </div>
@@ -35,14 +35,14 @@
             </div>
             <div class="col">
                 <div class="col">
-                    <div class="card bg-warning text-white mb-3 text-center">
+                    <div class="card bg-info text-white mb-3 text-center">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-4">
                                     <i class="fas fa-hotel fa-3x"></i>
                                 </div>
                                 <div class="col-8">
-                                    <h4 class="card-title">14 Pensions d'invalidité</h4>
+                                    <h4 class="card-title">{{ stats.nbInvalRegul }} Pensions d'invalidité</h4>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                     <i class="fas fa-people-carry fa-3x"></i>
                                 </div>
                                 <div class="col-8">
-                                    <h4 class="card-title">11 équipes de membres</h4>
+                                    <h4 class="card-title">{{ stats.nbEquipes }} équipes de membres</h4>
                                 </div>
                             </div>
                         </div>
@@ -70,21 +70,34 @@
         <div class="row">
             <div class="col">
                 <div class="alert alert-secondary">
-                    <h3 class="alert-heading my-3">
+                    <h3 class="alert-heading text-primary my-3">
                         <i class="fas fa-arrow-up"></i>
                         Statistiques des saisies par utilisateurs
                     </h3>
                     <table class="table table-hover">
                         <thead>
-                            <tr class="table-primary">
+                            <tr class="table-active">
                                 <th class="text-center"><i class="fas fa-sort-up"></i> Rang</th>
                                 <th><i class="fas fa-address-card"></i> Noms et prénoms</th>
-                                <th class="text-center"><i class="fas fa-coins"></i> Compteur</th>
                                 <th class="text-center">Equipe</th>
+                                <th class="text-center"><i class="fas fa-coins"></i> Pensions de réversion</th>
+                                <th class="text-center"><i class="fas fa-coins"></i> Pensions d'invalidité</th>
+                                <th class="text-center"><i class="fas fa-coins"></i> Total</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            {% set rang = 1 %}
+                            {% for statUser in userStats %}
+                                <tr>
+                                    <td class="text-center">{{ rang }}</td>
+                                    <td>{{ statUser.fullName }}</td>
+                                    <td class="text-center">{{ statUser.libelle }}</td>
+                                    <td class="text-center">{{ statUser.nbReversion }}</td>
+                                    <td class="text-center">{{ statUser.nbInvalidite }}</td>
+                                    <td class="text-center">{{ statUser.total }}</td>
+                                </tr>
+                                {% set rang = rang + 1 %}
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

@@ -3,14 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Reversion;
+use App\Service\Paginator;
 use App\Form\ReversionType;
 use App\Service\Statistiques;
-use App\Form\SearchReversionType;
-use App\Service\Paginator;
-use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Stmt\Static_;
+use App\Form\SearchReversionType;
+use App\Repository\ReversionRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -31,6 +37,12 @@ class ReversionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $ayantDroit = $reversion->getNomsAyantDroit();
             $ay = $statistiques->findAyantDroit($ayantDroit);
+            if (empty($ay)) {
+                $this->addFlash("danger",
+                    "<strong>" . $ayantDroit . "</strong> n'a pas été trouvé dans la base des ayants droit 
+                    appelés à clarifier leur situation."
+                );
+            }
         }
 
         return $this->render('reversion/index.html.twig', [
@@ -104,5 +116,26 @@ class ReversionController extends AbstractController
             'compteur' => $statistiques->getCompteurReversion($this->getUser()),
             'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
+    }
+
+    /**
+     * @Route("/reversion/autocomplete", methods="GET", name="search_reversion", defaults={"_format"="json"})
+     * @param EntityManagerInterface $manager
+     * @return void
+     */
+    public function searchAutocomplete(Request $request, EntityManagerInterface $manager, 
+        ReversionRepository $reversionRepository)
+    {
+        // search_reversion[nomsAyantDroit]
+        $requestString = $request->get('search_reversion[nomsAyantDroit]');
+
+        $results = $reversionRepository->findReversion($requestString);
+
+        //$response = new Response(json_encode($results));
+        return new JsonResponse($results);
+
+        //$response = new Response(json_encode($results));
+        //$response->headers->set('Content-Type', 'application/json');
+        //return $response;
     }
 }

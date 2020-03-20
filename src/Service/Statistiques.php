@@ -13,6 +13,16 @@ class Statistiques
         $this->manager = $manager;
     }
 
+    public function getStats()
+    {
+        $nbUsers = $this->getUserCount();
+        $nbEquipes = $this->getEquipeCount();
+        $nbReversRegul = $this->getCountRegulReversion();
+        $nbInvalRegul = $this->getCountRegulInvalidite();
+
+        return compact('nbUsers', 'nbEquipes', 'nbReversRegul', 'nbInvalRegul');
+    }
+
     /**
      * Permet de rechercher une pension de réversion à partir de son nom
      *
@@ -169,6 +179,26 @@ class Statistiques
              WHERE i.resultat = 4'
         )
         ->getSingleScalarResult();
+    }
+
+    /**
+     * Nombres de users inscrits
+     *
+     * @return void
+     */
+    public function getUserCount()
+    {
+        return $this->manager->createQuery("SELECT COUNT(u) FROM App\Entity\User u")->getSingleScalarResult();
+    }
+
+    /**
+     * Nombres d'équipes inscrites
+     *
+     * @return void
+     */
+    public function getEquipeCount()
+    {
+        return $this->manager->createQuery("SELECT COUNT(e) FROM App\Entity\Equipe e")->getSingleScalarResult();
     }
 }
 

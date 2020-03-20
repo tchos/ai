@@ -7,7 +7,8 @@
         {{ form_start(form) }}
             <h3 class="text-primary">
                 Recherche de l'ayant droit !
-                <span class="badge badge-primary float-right">ACTES DE REVERSION: {{ compteur }}</span>
+                <span class="badge badge-primary float-right">TOTAL DE REVERSIONS: {{ compteur }}</span>
+                <span class="badge badge-primary float-right mr-3">REVERSIONS DU JOUR: {{ compteurDuJour }}</span>
             </h3>
             <hr>
             <div class="alert alert-secondary">
@@ -72,8 +73,7 @@
     <script>
         $(document).ready(function(){
             $("#search_reversion_nomsAyantDroit").autocomplete({
-                source: 'searchADContentieux.php',
-                minLength: 4
+                
             });
         })
     </script>

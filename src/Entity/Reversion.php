@@ -33,6 +33,7 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      */
     private $nomsAyantDroit;
 
@@ -78,6 +79,9 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=7, nullable=true)
+     * @Assert\Regex(
+     *      pattern="/(^[A-Z][0-9]{6}$)|(^[0-9]{5,6}[A-Z]$)/",
+     *      message="Le matricule entré n'est pas un matricule valide.")
      */
     private $matriculeAuteur;
 
@@ -93,6 +97,7 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=3, minMessage="Le noms de l'ayant droit doit faire au moins {{ limit }} caractères .")
      */
     private $nomsAdActe;
 

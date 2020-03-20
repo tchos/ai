@@ -19,6 +19,38 @@ class ReversionRepository extends ServiceEntityRepository
         parent::__construct($registry, Reversion::class);
     }
 
+    public function findLike(string $name): ?array
+    {
+        return $this
+            ->createQueryBuilder('r')
+            ->where('r.nomsAyantDroit LIKE :name')
+            ->setParameter('name', "%$name%")
+            ->orderBy('r.nomsAyantDroit')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->execute();
+    }
+
+    public function findReversion($str)
+    {
+        $arrayAss = $this->getEntityManager()
+            ->createQuery(
+                'SELECT r.nomsAyantDroit
+                FROM App\Entity\Reversion r
+                WHERE r.nomsAyantDroit LIKE :str'
+            )
+            ->setParameter('str', '%' . $str . '%')
+            ->getArrayResult();
+        
+        $array = array();
+        foreach ($arrayAss as $data) 
+        {
+            $array[] = $data['nomsAyantDroit'];
+        }
+
+        return $array;
+    }
+
     // /**
     //  * @return Reversion[] Returns an array of Reversion objects
     //  */
