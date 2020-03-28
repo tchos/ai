@@ -55,10 +55,17 @@
                             <td class="text-center">{{ invalidite.aAffect }}</td>
                             <td>{{ invalidite.numActeInval }}</td>
                             <td class="text-center">
-                                <a href="{{ path('invalidite_edit', {'matriculInv': invalidite.matriculInv}) }}" 
-                                    class="btn btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                {% if fake == "false" %}
+                                    <a href="{{ path('invalidite_edit', {'matriculInv': invalidite.matriculInv}) }}" 
+                                        class="btn btn-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                {% elseif fake == "true" %}
+                                    <a href="{{path('invalidite_edit_fake',{'matriculInv': invalidite.matriculInv})}}" 
+                                        class="btn btn-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% set i = i + 1 %}

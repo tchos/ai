@@ -16,10 +16,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class InvaliditeController extends AbstractController
 {
     /**
-     * @Route("/invalidite/index", name="invalidite_index")
+     * @Route("/invalidite/{fake}/index", name="invalidite_index")
      * @IsGranted("ROLE_USER")
      */
-    public function index(Request $request, Statistiques $statistiques)
+    public function index(Request $request, Statistiques $statistiques, $fake)
     {
         $invalidite = new Invalidite();
         $inv = null;
@@ -40,6 +40,7 @@ class InvaliditeController extends AbstractController
         }
 
         return $this->render('invalidite/index.html.twig', [
+            'fake' => $fake,
             'inv' => $inv,
             'form' => $form->createView(),
             'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
@@ -68,6 +69,8 @@ class InvaliditeController extends AbstractController
             $invalidite->setAgentSaisie($this->getUser())
                        ->setDateSaisie(new \DateTime())
                        ->setResultat(4)
+                       ->setIsAuthentik(true)
+                       ->setWhyIsNotAuthentik("")
             ;
             $manager->persist($invalidite);
             $manager->flush();
@@ -78,10 +81,56 @@ class InvaliditeController extends AbstractController
             ({$invalidite->getMatriculInv()})</strong> a été enregistré avec succès."
             );
 
-            return $this->redirectToRoute('invalidite_index');
+            return $this->redirectToRoute('invalidite_index', ["fake" => "false"]);
         }
 
         return $this->render("invalidite/edit.html.twig", [
+            'invalidite' => $invalidite,
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
+        ]);
+    }
+
+    /**
+     * Permet de régulariser une pension d'invalidité
+     * 
+     * @Route("/invalidite/fake/{matriculInv}/edit", name="invalidite_edit_fake")
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Invalidite $invalidite
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return void
+     */
+    public function nonAuthentikInvalidite(
+        Invalidite $invalidite,
+        EntityManagerInterface $manager,
+        Request $request,
+        Statistiques $statistiques
+    ) {
+        $form = $this->createForm(InvaliditeType::class, $invalidite);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $invalidite->setAgentSaisie($this->getUser())
+                ->setDateSaisie(new \DateTime())
+                ->setResultat(5)
+                ->setIsAuthentik(false)
+            ;
+            $manager->persist($invalidite);
+            $manager->flush();
+
+            $this->addFlash(
+                "success",
+                "L'acte octroyant la pension d'invalidité à <strong>{$invalidite->getNomAgentInvalide()}
+            ({$invalidite->getMatriculInv()})</strong> a été enregistré avec succès."
+            );
+
+            return $this->redirectToRoute('invalidite_index', ["fake" => "true"]);
+        }
+
+        return $this->render("invalidite/fake.html.twig", [
             'invalidite' => $invalidite,
             'form' => $form->createView(),
             'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),

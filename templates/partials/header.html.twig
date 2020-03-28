@@ -39,7 +39,7 @@
                     Pensions d'invalidité
                 </a>
                 <div class="dropdown-menu" style="">
-                    <a class="dropdown-item" href="{{ path('invalidite_index') }}">
+                    <a class="dropdown-item" href="{{ path('invalidite_index', {'fake': "false"}) }}">
                         <i class="fas fa-laptop"></i>
                         Saisir pension d'invalidité
                     </a>
@@ -58,10 +58,10 @@
                 </a>
                 <div class="dropdown-menu" style="">
                     <a class="dropdown-item" href="{{ path('reversion_index', {'fake': "true"}) }}">
-                        <i class="fas fa-restroom"></i>
+                        <i class="fas fa-female"></i>
                         Pensions de réversion
                     </a>
-                    <a class="dropdown-item" href="{{ path('invalidite_show') }}">
+                    <a class="dropdown-item" href="{{ path('invalidite_index', {'fake': "true"}) }}">
                         <i class="fas fa-blind"></i>
                         Pensions d'invalidité
                     </a>

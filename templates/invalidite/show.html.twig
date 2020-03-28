@@ -35,10 +35,17 @@
                         <td class="text-center">{{ invalidite.dateInvalidite | date("d/m/Y") }}</td>
                         <td class="text-center">{{ invalidite.dateSaisie | date("d/m/Y") }}</td>
                         <td class="text-center">
-                            <a href="{{ path('invalidite_edit', {'matriculInv': invalidite.matriculInv}) }}" 
-                                class="btn btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            {% if invalidite.isAuthentik %}
+                                <a href="{{ path('invalidite_edit', {'matriculInv': invalidite.matriculInv}) }}" 
+                                    class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            {% elseif not invalidite.isAuthentik %}
+                                <a href="{{ path('invalidite_edit_fake', {'matriculInv': invalidite.matriculInv}) }}" 
+                                    class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% set i = i + 1 %}

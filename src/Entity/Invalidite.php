@@ -103,6 +103,11 @@ class Invalidite
     private $whyIsNotAuthentik;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isAuthentik;
+
+    /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte d'invalidité pour
      * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     * 
      * 
@@ -323,6 +328,18 @@ class Invalidite
     public function setWhyIsNotAuthentik(?string $whyIsNotAuthentik): self
     {
         $this->whyIsNotAuthentik = $whyIsNotAuthentik;
+
+        return $this;
+    }
+
+    public function getIsAuthentik(): ?bool
+    {
+        return $this->isAuthentik;
+    }
+
+    public function setIsAuthentik(?bool $isAuthentik): self
+    {
+        $this->isAuthentik = $isAuthentik;
 
         return $this;
     }

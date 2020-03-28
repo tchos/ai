@@ -27,7 +27,7 @@
                 </div>
                 <div class="col">
                     {{ form_label(form.dateSignatureRev, "Date de signature de l'acte") }}
-                    {{ form_widget(form.dateSignatureRev) }}
+                    {{ form_widget(form.dateSignatureRev, {'attr': {'placeholder': 'jj/mm/aaaa'}}) }}
                 </div>
                 <div class="col">
                     {{ form_row(form.typeActe) }}
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col">
                     {{ form_label(form.dateDeces, "Date de décès") }}
-                    {{ form_widget(form.dateDeces) }}
+                    {{ form_widget(form.dateDeces, {'attr': {'placeholder': 'jj/mm/aaaa'}}) }}
                 </div>
             </div>
             <div class="row">
@@ -61,7 +61,7 @@
                 </div>
                 <div class="col">
                     {{ form_label(form.dateNaisDerOrph, "Date de naissance du dernier orphelin mineur") }}
-                    {{ form_widget(form.dateNaisDerOrph) }}
+                    {{ form_widget(form.dateNaisDerOrph, {'attr': {'placeholder': 'jj/mm/aaaa'}}) }}
                 </div>
             </div>
             <div class="row">

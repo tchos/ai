@@ -35,10 +35,17 @@
                         <td>{{ reversion.nomsAdActe }}</td>
                         <td class="text-center">{{ reversion.dateSaisie | date("d/m/Y") }}</td>
                         <td class="text-center">
-                            <a href="{{ path('reversion_edit', {'matricul': reversion.matricul}) }}" 
-                                class="btn btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            {% if reversion.conforme_Y_N %}
+                                <a href="{{ path('admin_reversion_edit', {'matricul': reversion.matricul}) }}" 
+                                    class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            {% elseif not reversion.conforme_Y_N %}
+                                <a href="{{ path('admin_reversion_edit_fake', {'matricul': reversion.matricul}) }}" 
+                                    class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% set i = i + 1 %}

@@ -15,9 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminInvaliditeController extends AbstractController
 {
     /**
-     * @Route("/admin/invalidite/index", name="admin_invalidite")
+     * @Route("/admin/invalidite/{fake}/index", name="admin_invalidite")
      */
-    public function index(Request $request, Statistiques $statistiques)
+    public function index(Request $request, Statistiques $statistiques, $fake)
     {
         $invalidite = new Invalidite();
         $inv = null;
@@ -39,6 +39,7 @@ class AdminInvaliditeController extends AbstractController
         }
 
         return $this->render('admin/invalidite/index.html.twig', [
+            'fake' => $fake,
             'inv' => $inv,
             'form' => $form->createView(),
             'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
@@ -74,7 +75,7 @@ class AdminInvaliditeController extends AbstractController
             "L'acte octroyant la pension d'invalidité à <strong>{$invalidite->getNomAgentInvalide()}
             ({$invalidite->getMatriculInv()})</strong> a été enregistré avec succès.");
 
-            return $this->redirectToRoute('admin_invalidite');
+            return $this->redirectToRoute('admin_invalidite', ['fake' => 'false']);
         }
 
         return $this->render("admin/invalidite/edit.html.twig", [
@@ -84,6 +85,48 @@ class AdminInvaliditeController extends AbstractController
             'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
         ]);
 
+    }
+
+    /**
+     * Permet de régulariser une pension d'invalidité
+     * 
+     * @Route("/admin/invalidite/fake/{matriculInv}/edit", name="admin_invalidite_edit_fake")
+     *
+     * @param Invalidite $invalidite
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return void
+     */
+    public function nonAuthentikInvalidite(
+        Invalidite $invalidite,
+        EntityManagerInterface $manager,
+        Request $request,
+        Statistiques $statistiques
+    ) {
+        $form = $this->createForm(InvaliditeType::class, $invalidite);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $invalidite->setAgentSaisie($this->getUser())
+                ->setResultat(4);
+            $manager->persist($invalidite);
+            $manager->flush();
+
+            $this->addFlash(
+                "success",
+                "L'acte octroyant la pension d'invalidité à <strong>{$invalidite->getNomAgentInvalide()}
+            ({$invalidite->getMatriculInv()})</strong> a été enregistré avec succès."
+            );
+
+            return $this->redirectToRoute('admin_invalidite', ['fake' => 'true']);
+        }
+
+        return $this->render("admin/invalidite/fake.html.twig", [
+            'invalidite' => $invalidite,
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser())
+        ]);
     }
 
     /**
