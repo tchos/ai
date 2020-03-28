@@ -23,10 +23,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ReversionController extends AbstractController
 {
     /**
-     * @Route("/reversion/search", name="reversion_index")
+     * @Route("/reversion/{fake}/search", name="reversion_index")
      * @IsGranted("ROLE_USER")
      */
-    public function index(Request $request, Statistiques $statistiques)
+    public function index(Request $request, Statistiques $statistiques, $fake)
     {
         $reversion = new Reversion();
         $ay = null;
@@ -46,6 +46,7 @@ class ReversionController extends AbstractController
         }
 
         return $this->render('reversion/index.html.twig', [
+            'fake' => $fake,
             'ay' => $ay,
             'form' => $form->createView(),
             'compteur' => $statistiques->getCompteurReversion($this->getUser()),
@@ -70,7 +71,9 @@ class ReversionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $reversion->setAgentSaisie($this->getUser())
                       ->setDateSaisie(new \DateTime())
-                      ->setResultat(4);
+                      ->setResultat(4)
+                      ->setConformeYN(true)
+                      ->setWhyIsNotAuthentik("");
 
             $manager->persist($reversion);
             $manager->flush();
@@ -82,10 +85,54 @@ class ReversionController extends AbstractController
                 été enregistré avec succès. "
             );
 
-            return $this->redirectToRoute("reversion_index");
+            return $this->redirectToRoute("reversion_index", ["fake" => "false"]);
         }
 
         return $this->render("reversion/edit.html.twig", [
+            'reversion' => $reversion,
+            'form' => $form->createView(),
+            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser())
+        ]);
+    }
+
+    /**
+     * Permet de mettre à jour un acte
+     * @Route("reversion/fake/{matricul}/edit", name="reversion_edit_fake")
+     * @IsGranted("ROLE_USER")
+     *
+     * @return Response
+     */
+    public function nonAuthentikReversion(
+        EntityManagerInterface $manager,
+        Request $request,
+        Reversion $reversion,
+        Statistiques $statistiques
+    ) {
+        $form = $this->createForm(ReversionType::class, $reversion);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reversion->setAgentSaisie($this->getUser())
+                ->setDateSaisie(new \DateTime())
+                ->setResultat(5)
+                ->setConformeYN(false);
+
+            $manager->persist($reversion);
+            $manager->flush();
+
+            $this->addFlash(
+                "success",
+                "L'acte octroyant la pension de reversion à <strong>{$reversion->getNomsAyantDroit()}
+                ({$reversion->getMatricul()})</strong> a 
+                été enregistré avec succès. "
+            );
+
+            return $this->redirectToRoute("reversion_index", ["fake" => "true"]);
+        }
+
+        return $this->render("reversion/fake.html.twig", [
             'reversion' => $reversion,
             'form' => $form->createView(),
             'compteur' => $statistiques->getCompteurReversion($this->getUser()),

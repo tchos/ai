@@ -74,7 +74,7 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Vous devez entrer le nom de l'auteur de droit.")
+     * 
      */
     private $nomsAuteur;
 
@@ -104,7 +104,8 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Vous devez entrer le numéro de l'acte attribuant la pension de réversion.")
+     * @Assert\Length(min="4", 
+     *  minMessage="Vous devez entrer le numéro de l'acte attribuant la pension de réversion.")
      */
     private $numActeRevers;
 
@@ -153,6 +154,11 @@ class Reversion
      * @ORM\Column(type="integer", nullable=true)
      */
     private $aAffect;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $whyIsNotAuthentik;
 
     /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance pour
@@ -449,6 +455,18 @@ class Reversion
     public function setAAffect(?int $aAffect): self
     {
         $this->aAffect = $aAffect;
+
+        return $this;
+    }
+
+    public function getWhyIsNotAuthentik(): ?string
+    {
+        return $this->whyIsNotAuthentik;
+    }
+
+    public function setWhyIsNotAuthentik(?string $whyIsNotAuthentik): self
+    {
+        $this->whyIsNotAuthentik = $whyIsNotAuthentik;
 
         return $this;
     }

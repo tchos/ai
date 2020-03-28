@@ -98,6 +98,11 @@ class Invalidite
     private $dateSaisie;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $whyIsNotAuthentik;
+
+    /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte d'invalidité pour
      * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     * 
      * 
@@ -306,6 +311,18 @@ class Invalidite
     public function setDateSaisie(?\DateTimeInterface $dateSaisie): self
     {
         $this->dateSaisie = $dateSaisie;
+
+        return $this;
+    }
+
+    public function getWhyIsNotAuthentik(): ?string
+    {
+        return $this->whyIsNotAuthentik;
+    }
+
+    public function setWhyIsNotAuthentik(?string $whyIsNotAuthentik): self
+    {
+        $this->whyIsNotAuthentik = $whyIsNotAuthentik;
 
         return $this;
     }

@@ -31,13 +31,40 @@ class Statistiques
      */
     public function findAyantDroit($ayantdroit)
     {
+        $mots_cles = explode(" ", $ayantdroit);
+        for($i=0; $i < sizeof($mots_cles); $i++)
+        {
+            if($i == 0)
+            {
+                $recherche = '
+                    SELECT r 
+                    FROM App\Entity\Reversion r
+                    WHERE r.nomsAyantDroit LIKE :mot_clef'.$i.'
+                ';
+            } 
+            else
+            {
+                $recherche .= ' AND r.nomsAyantDroit LIKE :mot_clef' . $i . '';
+            }
+        }
+
+        $query = $this->manager->createQuery($recherche);
+        for($i = 0; $i < sizeof($mots_cles); $i++)
+        {
+            $mot_clef = trim($mots_cles[$i]);
+            $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
+        } 
+
+        return $query->getResult();
+
+        /**
         return $this->manager->createQuery('
             SELECT r 
             FROM App\Entity\Reversion r
             WHERE r.nomsAyantDroit LIKE :ayantdroit
         ')
         ->setParameter('ayantdroit', '%'.$ayantdroit.'%')
-        ->getResult();
+        ->getResult(); */
     }
 
     /**
@@ -48,6 +75,28 @@ class Statistiques
      */
     public function findInvalidite($invalidite)
     {
+        $mots_cles = explode(" ", $invalidite);
+        for ($i = 0; $i < sizeof($mots_cles); $i++) {
+            if ($i == 0) {
+                $recherche = '
+                    SELECT i
+                    FROM App\Entity\Invalidite i
+                    WHERE i.nomAgentInvalide LIKE :mot_clef' . $i . '
+                ';
+            } else {
+                $recherche .= ' AND i.nomAgentInvalide LIKE :mot_clef' . $i . '';
+            }
+        }
+
+        $query = $this->manager->createQuery($recherche);
+        
+        for ($i = 0; $i < sizeof($mots_cles); $i++) {
+            $mot_clef = trim($mots_cles[$i]);
+            $query->setParameter('mot_clef' . $i . '', '%' . $mot_clef . '%');
+        }
+
+        return $query->getResult();
+        /**
         return $this->manager->createQuery('
             SELECT i
             FROM App\Entity\Invalidite i
@@ -55,6 +104,7 @@ class Statistiques
         ')
         ->setParameter('invalidite', '%' . $invalidite . '%')
         ->getResult();
+        */
     }
 
     /**

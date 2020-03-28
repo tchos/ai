@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Reversion;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -102,6 +103,7 @@ class ReversionType extends ApplicationType
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd/MM/yyyy'])
+            ->add('whyIsNotAuthentik', TextareaType::class)
         ;
     }
 
