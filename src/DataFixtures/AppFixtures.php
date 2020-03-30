@@ -48,6 +48,14 @@ class AppFixtures extends Fixture
         ;
         $manager->persist($adminUser);
 
+        $adminUser2 = new User();
+        $adminUser2->setFullName('Azemafac Romaric')
+            ->setEmail('azemafac@minfi.cm')
+            ->setHash($this->encoder->encodePassword($adminUser2, 'minfi'))
+            ->addUserRole($adminRole)
+            ->setEquipe($equipe);
+        $manager->persist($adminUser2);
+
         $manager->flush();
     }
 }
