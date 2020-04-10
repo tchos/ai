@@ -39,12 +39,13 @@ class Statistiques
                 $recherche = '
                     SELECT r 
                     FROM App\Entity\Reversion r
-                    WHERE r.nomsAyantDroit LIKE :mot_clef'.$i.'
+                    WHERE (r.nomsAyantDroit LIKE :mot_clef'.$i. ' OR r.matricul LIKE :mot_clef' . $i . ')
                 ';
             } 
             else
             {
-                $recherche .= ' AND r.nomsAyantDroit LIKE :mot_clef' . $i . '';
+                $recherche .= ' AND (r.nomsAyantDroit LIKE :mot_clef' . $i . '
+                    OR r.matricul LIKE :mot_clef' . $i . ')';
             }
         }
 
@@ -81,10 +82,11 @@ class Statistiques
                 $recherche = '
                     SELECT i
                     FROM App\Entity\Invalidite i
-                    WHERE i.nomAgentInvalide LIKE :mot_clef' . $i . '
+                    WHERE (i.nomAgentInvalide LIKE :mot_clef' . $i . ' OR i.matriculInv LIKE :mot_clef' . $i . ')
                 ';
             } else {
-                $recherche .= ' AND i.nomAgentInvalide LIKE :mot_clef' . $i . '';
+                $recherche .= ' AND (i.nomAgentInvalide LIKE :mot_clef' . $i . ' 
+                    OR i.matriculInv LIKE :mot_clef' . $i . ')';
             }
         }
 

@@ -39,7 +39,9 @@ class InvaliditeType extends ApplicationType
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd/MM/yyyy'])
-            ->add('whyIsNotAuthentik', TextareaType::class)
+            ->add('whyIsNotAuthentik', TextareaType::class, [
+                'required' => false
+            ])
         ;
     }
 

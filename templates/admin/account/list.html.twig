@@ -42,12 +42,13 @@
         </table>
         {# Service de pagination #}
         {{ paginator.display() }}
+        <div class="mb-3">&nbsp;</div>
     </div>
 {% endblock %}
 
-{# surchage du block javascript du template de base #}
+{# surchage du block javascript du template de base 
 {% block javascripts %}
     <script>
         $('#myLinkToConfirm').confirmModal();
     </script>
-{% endblock %}
+{% endblock %} #}
