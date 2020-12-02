@@ -70,11 +70,23 @@ class User implements UserInterface
      */
     private $userRoles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegulReversion", mappedBy="agentSaisie")
+     */
+    private $regulReversions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegulInvalidite", mappedBy="agentSaisie")
+     */
+    private $regulInvalidites;
+
     public function __construct()
     {
         $this->reversions = new ArrayCollection();
         $this->invalidites = new ArrayCollection();
         $this->userRoles = new ArrayCollection();
+        $this->regulReversions = new ArrayCollection();
+        $this->regulInvalidites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -249,5 +261,67 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return Collection|RegulReversion[]
+     */
+    public function getRegulReversions(): Collection
+    {
+        return $this->regulReversions;
+    }
+
+    public function addRegulReversion(RegulReversion $regulReversion): self
+    {
+        if (!$this->regulReversions->contains($regulReversion)) {
+            $this->regulReversions[] = $regulReversion;
+            $regulReversion->setAgentSaisie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegulReversion(RegulReversion $regulReversion): self
+    {
+        if ($this->regulReversions->contains($regulReversion)) {
+            $this->regulReversions->removeElement($regulReversion);
+            // set the owning side to null (unless already changed)
+            if ($regulReversion->getAgentSaisie() === $this) {
+                $regulReversion->setAgentSaisie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegulInvalidite[]
+     */
+    public function getRegulInvalidites(): Collection
+    {
+        return $this->regulInvalidites;
+    }
+
+    public function addRegulInvalidite(RegulInvalidite $regulInvalidite): self
+    {
+        if (!$this->regulInvalidites->contains($regulInvalidite)) {
+            $this->regulInvalidites[] = $regulInvalidite;
+            $regulInvalidite->setAgentSaisie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegulInvalidite(RegulInvalidite $regulInvalidite): self
+    {
+        if ($this->regulInvalidites->contains($regulInvalidite)) {
+            $this->regulInvalidites->removeElement($regulInvalidite);
+            // set the owning side to null (unless already changed)
+            if ($regulInvalidite->getAgentSaisie() === $this) {
+                $regulInvalidite->setAgentSaisie(null);
+            }
+        }
+
+        return $this;
     }
 }
