@@ -80,6 +80,26 @@ class User implements UserInterface
      */
     private $regulInvalidites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegulRevSusp", mappedBy="agentSaisie")
+     */
+    private $regulRevSusps;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegulRevClo", mappedBy="agentSaisie")
+     */
+    private $regulRevClos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegulInvSusp", mappedBy="agentSaisie")
+     */
+    private $regulInvSusps;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegulInvClo", mappedBy="agentSaisie")
+     */
+    private $regulInvClos;
+
     public function __construct()
     {
         $this->reversions = new ArrayCollection();
@@ -87,6 +107,10 @@ class User implements UserInterface
         $this->userRoles = new ArrayCollection();
         $this->regulReversions = new ArrayCollection();
         $this->regulInvalidites = new ArrayCollection();
+        $this->regulRevSusps = new ArrayCollection();
+        $this->regulRevClos = new ArrayCollection();
+        $this->regulInvSusps = new ArrayCollection();
+        $this->regulInvClos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -319,6 +343,130 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($regulInvalidite->getAgentSaisie() === $this) {
                 $regulInvalidite->setAgentSaisie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegulRevSusp[]
+     */
+    public function getRegulRevSusps(): Collection
+    {
+        return $this->regulRevSusps;
+    }
+
+    public function addRegulRevSusp(RegulRevSusp $regulRevSusp): self
+    {
+        if (!$this->regulRevSusps->contains($regulRevSusp)) {
+            $this->regulRevSusps[] = $regulRevSusp;
+            $regulRevSusp->setAgentSaisie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegulRevSusp(RegulRevSusp $regulRevSusp): self
+    {
+        if ($this->regulRevSusps->contains($regulRevSusp)) {
+            $this->regulRevSusps->removeElement($regulRevSusp);
+            // set the owning side to null (unless already changed)
+            if ($regulRevSusp->getAgentSaisie() === $this) {
+                $regulRevSusp->setAgentSaisie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegulRevClo[]
+     */
+    public function getRegulRevClos(): Collection
+    {
+        return $this->regulRevClos;
+    }
+
+    public function addRegulRevClo(RegulRevClo $regulRevClo): self
+    {
+        if (!$this->regulRevClos->contains($regulRevClo)) {
+            $this->regulRevClos[] = $regulRevClo;
+            $regulRevClo->setAgentSaisie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegulRevClo(RegulRevClo $regulRevClo): self
+    {
+        if ($this->regulRevClos->contains($regulRevClo)) {
+            $this->regulRevClos->removeElement($regulRevClo);
+            // set the owning side to null (unless already changed)
+            if ($regulRevClo->getAgentSaisie() === $this) {
+                $regulRevClo->setAgentSaisie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegulInvSusp[]
+     */
+    public function getRegulInvSusps(): Collection
+    {
+        return $this->regulInvSusps;
+    }
+
+    public function addRegulInvSusp(RegulInvSusp $regulInvSusp): self
+    {
+        if (!$this->regulInvSusps->contains($regulInvSusp)) {
+            $this->regulInvSusps[] = $regulInvSusp;
+            $regulInvSusp->setAgentSaisie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegulInvSusp(RegulInvSusp $regulInvSusp): self
+    {
+        if ($this->regulInvSusps->contains($regulInvSusp)) {
+            $this->regulInvSusps->removeElement($regulInvSusp);
+            // set the owning side to null (unless already changed)
+            if ($regulInvSusp->getAgentSaisie() === $this) {
+                $regulInvSusp->setAgentSaisie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegulInvClo[]
+     */
+    public function getRegulInvClos(): Collection
+    {
+        return $this->regulInvClos;
+    }
+
+    public function addRegulInvClo(RegulInvClo $regulInvClo): self
+    {
+        if (!$this->regulInvClos->contains($regulInvClo)) {
+            $this->regulInvClos[] = $regulInvClo;
+            $regulInvClo->setAgentSaisie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegulInvClo(RegulInvClo $regulInvClo): self
+    {
+        if ($this->regulInvClos->contains($regulInvClo)) {
+            $this->regulInvClos->removeElement($regulInvClo);
+            // set the owning side to null (unless already changed)
+            if ($regulInvClo->getAgentSaisie() === $this) {
+                $regulInvClo->setAgentSaisie(null);
             }
         }
 
