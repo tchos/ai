@@ -3,9 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RegulInvCloRepository")
+ * @ORM\HasLifecycleCallbacks
+ *
+ * L'acte d'une pension de réversion pour un agent doit être unique
+ * @UniqueEntity(
+ *      fields = {"numActeInval"},
+ *      message = "Cet acte de réversion a déjà été enregistré."
+ * )
  */
 class RegulInvClo
 {
@@ -33,6 +42,8 @@ class RegulInvClo
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min="4",
+     *  minMessage="Vous devez entrer le numéro de l'acte attribuant la pension de réversion.")
      */
     private $numActeInval;
 
@@ -80,6 +91,27 @@ class RegulInvClo
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="regulInvClos")
      */
     private $agentSaisie;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $DateNaisDerOrph;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer un acte d'invalidité pour
+     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     *.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function prePersist()
+    {
+        if (empty($this->dateRegul) || $this->dateRegul === null) {
+            $this->dateRegul = new \DateTime();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -238,6 +270,18 @@ class RegulInvClo
     public function setAgentSaisie(?User $agentSaisie): self
     {
         $this->agentSaisie = $agentSaisie;
+
+        return $this;
+    }
+
+    public function getDateNaisDerOrph(): ?\DateTimeInterface
+    {
+        return $this->DateNaisDerOrph;
+    }
+
+    public function setDateNaisDerOrph(?\DateTimeInterface $DateNaisDerOrph): self
+    {
+        $this->DateNaisDerOrph = $DateNaisDerOrph;
 
         return $this;
     }

@@ -21,18 +21,19 @@ class ReversionType extends ApplicationType
                         'VEUVE' => 'VEUVE',
                         'VEUF' => 'VEUF',
                         'ORPHELIN' => 'ORPHELIN',
-                        'ASCENDANT' => 'ASCENDANT'
-                    ]
+                        'ASCENDANT' => 'ASCENDANT',
+                        'TUTEUR' => 'TUTEUR',
+                    ],
                 ])
             ->add('dateNaisDerOrph', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd/MM/yyyy'])
+                'format' => 'dd/MM/yyyy', ])
             ->add('nomsAuteur', TextType::class,
                 $this->getConfiguration("Nom de l'auteur de droit",
-                    "Ex: DIPANDA BOKENGUE BERTHE"))
-            ->add('matriculeAuteur', TextType::class, 
-                $this->getConfiguration("Matricule de l'auteur de droit", "Ex: 674675T"))
+                    'Ex: DIPANDA BOKENGUE BERTHE'))
+            ->add('matriculeAuteur', TextType::class,
+                $this->getConfiguration("Matricule de l'auteur de droit", 'Ex: 674675T'))
             ->add('ministere', ChoiceType::class, [
                     'choices' => [
                     'PRC' => 'PR',
@@ -80,31 +81,31 @@ class ReversionType extends ApplicationType
                     'PENSIONNES' => 'PENSIONNES',
                     'CONSUPE' => 'CONSUPE',
                     'COURSUP' => 'COURSUP',
-                    'TAMPON' => 'TAMPON'
-                ]
+                    'TAMPON' => 'TAMPON',
+                ],
             ])
             ->add('dateDeces', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd/MM/yyyy'])
+                'format' => 'dd/MM/yyyy', ])
             ->add('nomsAdActe', TextType::class,
-                $this->getConfiguration( "Nom de l'ayant droit tel que porté sur l'acte",
-                "Ex: DIPANDA BOKENGUE BERTHE"))
+                $this->getConfiguration("Nom de l'ayant droit tel que porté sur l'acte",
+                'Ex: DIPANDA BOKENGUE BERTHE'))
             ->add('numActeRevers', TextType::class,
-                $this->getConfiguration("Numéro de l'acte de réversion","Ex: 1234/MFPRA/12/DGC"))
+                $this->getConfiguration("Numéro de l'acte de réversion", 'Ex: 1234/MFPRA/12/DGC'))
             ->add('typeActe', ChoiceType::class, [
                 'choices' => [
                     'Décret présidentiel' => 'Décret présidentiel',
                     'Arrêté ministériel' => 'Arrêté ministériel',
-                    'Décision régionale' => 'Décision régionale'
-                ]
+                    'Décision régionale' => 'Décision régionale',
+                ],
             ])
             ->add('dateSignatureRev', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd/MM/yyyy'])
+                'format' => 'dd/MM/yyyy', ])
             ->add('whyIsNotAuthentik', TextareaType::class, [
-                'required' => false
+                'required' => false,
             ])
         ;
     }

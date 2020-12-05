@@ -3,9 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RegulInvSuspRepository")
+ * @ORM\HasLifecycleCallbacks
+ *
+ * L'acte d'une pension de réversion pour un agent doit être unique
+ * @UniqueEntity(
+ *      fields = {"numActeInval"},
+ *      message = "Cet acte de réversion a déjà été enregistré."
+ * )
  */
 class RegulInvSusp
 {
@@ -33,6 +42,8 @@ class RegulInvSusp
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min="4",
+     *  minMessage="Vous devez entrer le numéro de l'acte attribuant la pension de réversion.")
      */
     private $numActeInval;
 
@@ -43,11 +54,15 @@ class RegulInvSusp
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\GreaterThan(propertyPath="dateNaisDerOrph",
+     *  message="La date à laquelle a été signé l'acte ne peut être antérieur à la date de naissance
+     * du dernier orphelin mineur !")
      */
     private $dateSignature;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=3, minMessage="Le noms de l'ayant droit doit faire au moins {{ limit }} caractères .")
      */
     private $nomInvActe;
 
@@ -80,6 +95,27 @@ class RegulInvSusp
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="regulInvSusps")
      */
     private $agentSaisie;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $DateNaisDerOrph;
+
+    /**
+     * CallBack appelé à chaque fois que l'on veut enregistrer un acte d'invalidité pour
+     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     *.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function prePersist()
+    {
+        if (empty($this->dateRegul) || $this->dateRegul === null) {
+            $this->dateRegul = new \DateTime();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -238,6 +274,18 @@ class RegulInvSusp
     public function setNumActeInval(?string $numActeInval): self
     {
         $this->numActeInval = $numActeInval;
+
+        return $this;
+    }
+
+    public function getDateNaisDerOrph(): ?\DateTimeInterface
+    {
+        return $this->DateNaisDerOrph;
+    }
+
+    public function setDateNaisDerOrph(?\DateTimeInterface $DateNaisDerOrph): self
+    {
+        $this->DateNaisDerOrph = $DateNaisDerOrph;
 
         return $this;
     }

@@ -4,13 +4,13 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReversionRepository")
  * @ORM\HasLifecycleCallbacks
- * 
+ *
  * L'acte d'une pension de réversion pour un agent doit être unique
  * @UniqueEntity(
  *      fields = {"numActeRevers", "nomsAdActe"},
@@ -33,7 +33,6 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255)
-     * 
      */
     private $nomsAyantDroit;
 
@@ -74,7 +73,6 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * 
      */
     private $nomsAuteur;
 
@@ -104,7 +102,7 @@ class Reversion
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min="4", 
+     * @Assert\Length(min="4",
      *  minMessage="Vous devez entrer le numéro de l'acte attribuant la pension de réversion.")
      */
     private $numActeRevers;
@@ -116,11 +114,11 @@ class Reversion
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\GreaterThan(propertyPath="dateDeces", 
+     * @Assert\GreaterThan(propertyPath="dateDeces",
      *  message="La date à laquelle a été signé l'acte ne peut être antérieur à la date de décès !")
-     * 
-     * @Assert\GreaterThan(propertyPath="dateNaisDerOrph", 
-     *  message="La date à laquelle a été signé l'acte ne peut être antérieur à la date de naissance 
+     *
+     * @Assert\GreaterThan(propertyPath="dateNaisDerOrph",
+     *  message="La date à laquelle a été signé l'acte ne peut être antérieur à la date de naissance
      * du dernier orphelin mineur !")
      */
     private $dateSignatureRev;
@@ -162,8 +160,8 @@ class Reversion
 
     /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance pour
-     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     * 
-     * 
+     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     *.
+     *
      * @ORM\PrePersist
      * @ORM\PreUpdate
      *
@@ -171,8 +169,7 @@ class Reversion
      */
     public function prePersist()
     {
-        if(!empty($this->dateSaisie))
-        {
+        if (!empty($this->dateSaisie)) {
             $this->dateSaisie = new \DateTime();
         }
     }
@@ -289,7 +286,6 @@ class Reversion
 
         return $this;
     }
-
 
     public function getNomsAuteur(): ?string
     {

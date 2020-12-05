@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\IsNull;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InvaliditeRepository")
@@ -109,8 +108,8 @@ class Invalidite
 
     /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte d'invalidité pour
-     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     * 
-     * 
+     * calculer automatiquement la date de saisie, le résultat et l'agent de saisie.     *.
+     *
      * @ORM\PrePersist
      * @ORM\PreUpdate
      *

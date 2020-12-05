@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Invalidite;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SearchInvaliditeType extends ApplicationType
 {
@@ -14,7 +14,7 @@ class SearchInvaliditeType extends ApplicationType
         $builder
             ->add('nomAgentInvalide',
             TextType::class,
-            $this->getConfiguration("Noms de l'ayant droit", "Ex: ABANDA OLIVIER SYLVESTRE"))
+            $this->getConfiguration("Noms de l'agent invalide", 'Ex: ABANDA OLIVIER SYLVESTRE'))
         ;
     }
 

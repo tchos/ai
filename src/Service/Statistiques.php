@@ -24,43 +24,39 @@ class Statistiques
     }
 
     /**
-     * Permet de rechercher une pension de réversion à partir de son nom
+     * Permet de rechercher une pension de réversion à partir de son nom.
      *
      * @param [type] $ayantdroit
+     *
      * @return Entity ayantdroit
      */
     public function findAyantDroit($ayantdroit)
     {
-        $mots_cles = explode(" ", $ayantdroit);
-        for($i=0; $i < sizeof($mots_cles); $i++)
-        {
-            if($i == 0)
-            {
+        $mots_cles = explode(' ', $ayantdroit);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            if ($i == 0) {
                 $recherche = '
                     SELECT r 
                     FROM App\Entity\Reversion r
-                    WHERE (r.nomsAyantDroit LIKE :mot_clef'.$i. ' OR r.matricul LIKE :mot_clef' . $i . ')
+                    WHERE (r.nomsAyantDroit LIKE :mot_clef'.$i.' OR r.matricul LIKE :mot_clef'.$i.')
                 ';
-            } 
-            else
-            {
-                $recherche .= ' AND (r.nomsAyantDroit LIKE :mot_clef' . $i . '
-                    OR r.matricul LIKE :mot_clef' . $i . ')';
+            } else {
+                $recherche .= ' AND (r.nomsAyantDroit LIKE :mot_clef'.$i.'
+                    OR r.matricul LIKE :mot_clef'.$i.')';
             }
         }
 
         $query = $this->manager->createQuery($recherche);
-        for($i = 0; $i < sizeof($mots_cles); $i++)
-        {
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
             $mot_clef = trim($mots_cles[$i]);
             $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
-        } 
+        }
 
         return $query->getResult();
 
-        /**
+        /*
         return $this->manager->createQuery('
-            SELECT r 
+            SELECT r
             FROM App\Entity\Reversion r
             WHERE r.nomsAyantDroit LIKE :ayantdroit
         ')
@@ -69,36 +65,101 @@ class Statistiques
     }
 
     /**
-     * Permet de rechercher une pension d'invalidité à partir du nom
+     * Permet de rechercher une pension de réversion suspendue à partir de son nom.
      *
-     * @param [type] $invalidite
-     * @return Entity invalidite
+     * @param [type] $ayantdroit
+     *
+     * @return Entity ayantdroit
      */
-    public function findInvalidite($invalidite)
+    public function findADSusp($ayantdroit)
     {
-        $mots_cles = explode(" ", $invalidite);
-        for ($i = 0; $i < sizeof($mots_cles); $i++) {
+        $mots_cles = explode(' ', $ayantdroit);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
             if ($i == 0) {
                 $recherche = '
-                    SELECT i
-                    FROM App\Entity\Invalidite i
-                    WHERE (i.nomAgentInvalide LIKE :mot_clef' . $i . ' OR i.matriculInv LIKE :mot_clef' . $i . ')
+                    SELECT r 
+                    FROM App\Entity\RegulRevSusp r
+                    WHERE (r.nomsAyantDroit LIKE :mot_clef'.$i.' OR r.matricul LIKE :mot_clef'.$i.')
                 ';
             } else {
-                $recherche .= ' AND (i.nomAgentInvalide LIKE :mot_clef' . $i . ' 
-                    OR i.matriculInv LIKE :mot_clef' . $i . ')';
+                $recherche .= ' AND (r.nomsAyantDroit LIKE :mot_clef'.$i.'
+                    OR r.matricul LIKE :mot_clef'.$i.')';
             }
         }
 
         $query = $this->manager->createQuery($recherche);
-        
-        for ($i = 0; $i < sizeof($mots_cles); $i++) {
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
             $mot_clef = trim($mots_cles[$i]);
-            $query->setParameter('mot_clef' . $i . '', '%' . $mot_clef . '%');
+            $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
         }
 
         return $query->getResult();
-        /**
+    }
+
+    /**
+     * Permet de rechercher une pension de réversion suspendue à partir de son nom.
+     *
+     * @param [type] $ayantdroit
+     *
+     * @return Entity ayantdroit
+     */
+    public function findADClo($ayantdroit)
+    {
+        $mots_cles = explode(' ', $ayantdroit);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            if ($i == 0) {
+                $recherche = '
+                    SELECT r 
+                    FROM App\Entity\RegulRevClo r
+                    WHERE (r.nomsAyantDroit LIKE :mot_clef'.$i.' OR r.matricul LIKE :mot_clef'.$i.')
+                ';
+            } else {
+                $recherche .= ' AND (r.nomsAyantDroit LIKE :mot_clef'.$i.'
+                    OR r.matricul LIKE :mot_clef'.$i.')';
+            }
+        }
+
+        $query = $this->manager->createQuery($recherche);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            $mot_clef = trim($mots_cles[$i]);
+            $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
+        }
+
+        return $query->getResult();
+    }
+
+    /**
+     * Permet de rechercher une pension d'invalidité à partir du nom.
+     *
+     * @param [type] $invalidite
+     *
+     * @return Entity invalidite
+     */
+    public function findInvalidite($invalidite)
+    {
+        $mots_cles = explode(' ', $invalidite);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            if ($i == 0) {
+                $recherche = '
+                    SELECT i
+                    FROM App\Entity\Invalidite i
+                    WHERE (i.nomAgentInvalide LIKE :mot_clef'.$i.' OR i.matricul LIKE :mot_clef'.$i.')
+                ';
+            } else {
+                $recherche .= ' AND (i.nomAgentInvalide LIKE :mot_clef'.$i.' 
+                    OR i.matricul LIKE :mot_clef'.$i.')';
+            }
+        }
+
+        $query = $this->manager->createQuery($recherche);
+
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            $mot_clef = trim($mots_cles[$i]);
+            $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
+        }
+
+        return $query->getResult();
+        /*
         return $this->manager->createQuery('
             SELECT i
             FROM App\Entity\Invalidite i
@@ -110,7 +171,73 @@ class Statistiques
     }
 
     /**
-     * Retourne les statistiques de saisies par agents de saisie
+     * Permet de rechercher une pension d'invalidité à partir du nom.
+     *
+     * @param [type] $invalidite
+     *
+     * @return Entity regulInvSusp
+     */
+    public function findInvSusp($invalidite)
+    {
+        $mots_cles = explode(' ', $invalidite);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            if ($i == 0) {
+                $recherche = '
+                    SELECT i
+                    FROM App\Entity\RegulInvSusp i
+                    WHERE (i.nomAgentInvalide LIKE :mot_clef'.$i.' OR i.matricul LIKE :mot_clef'.$i.')
+                ';
+            } else {
+                $recherche .= ' AND (i.nomAgentInvalide LIKE :mot_clef'.$i.' 
+                    OR i.matricul LIKE :mot_clef'.$i.')';
+            }
+        }
+
+        $query = $this->manager->createQuery($recherche);
+
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            $mot_clef = trim($mots_cles[$i]);
+            $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
+        }
+
+        return $query->getResult();
+    }
+
+    /**
+     * Permet de rechercher une pension d'invalidité à partir du nom.
+     *
+     * @param [type] $invalidite
+     *
+     * @return Entity regulInvClo
+     */
+    public function findInvClo($invalidite)
+    {
+        $mots_cles = explode(' ', $invalidite);
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            if ($i == 0) {
+                $recherche = '
+                    SELECT i
+                    FROM App\Entity\RegulInvClo i
+                    WHERE (i.nomAgentInvalide LIKE :mot_clef'.$i.' OR i.matricul LIKE :mot_clef'.$i.')
+                ';
+            } else {
+                $recherche .= ' AND (i.nomAgentInvalide LIKE :mot_clef'.$i.' 
+                    OR i.matricul LIKE :mot_clef'.$i.')';
+            }
+        }
+
+        $query = $this->manager->createQuery($recherche);
+
+        for ($i = 0; $i < sizeof($mots_cles); ++$i) {
+            $mot_clef = trim($mots_cles[$i]);
+            $query->setParameter('mot_clef'.$i.'', '%'.$mot_clef.'%');
+        }
+
+        return $query->getResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies par agents de saisie.
      *
      * @return User
      */
@@ -133,9 +260,9 @@ class Statistiques
 
     /**
      * Retourne les statistiques de saisies de l'agent de saisie
-     * sur les pensions de réversion
+     * sur les pensions de réversion.
      *
-     * @return Integer
+     * @return int
      */
     public function getCompteurReversion($user)
     {
@@ -151,9 +278,9 @@ class Statistiques
 
     /**
      * Retourne les statistiques de saisies de l'agent de saisie du jour
-     * sur les pensions de réversion
+     * sur les pensions de réversion.
      *
-     * @return Integer
+     * @return int
      */
     public function getDailyCompteurReversion($user)
     {
@@ -169,9 +296,9 @@ class Statistiques
 
     /**
      * Retourne les statistiques de saisies de l'agent de saisie
-     * sur les pensions d'invalidite
+     * sur les pensions d'invalidite.
      *
-     * @return Integer
+     * @return int
      */
     public function getCompteurInvalidite($user)
     {
@@ -186,10 +313,10 @@ class Statistiques
     }
 
     /**
-     * Retourne les statistiques de saisies de l'agent de saisie du jour 
-     * sur les pensions d'invalidite
+     * Retourne les statistiques de saisies de l'agent de saisie du jour
+     * sur les pensions d'invalidite.
      *
-     * @return Integer
+     * @return int
      */
     public function getDailyCompteurInvalidite($user)
     {
@@ -204,9 +331,39 @@ class Statistiques
     }
 
     /**
-     * Nombre de réversions régularisés
+     * Nombre de réversions suspendues régularisées.
      *
-     * @return Integer
+     * @return int
+     */
+    public function getCountRegulReversionSusp()
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(r.numActeRevers) AS nbReversRegul
+             FROM App\Entity\RegulRevSusp r
+             WHERE r.regulariser_y_n = 1'
+        )
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Nombre de réversions clôturées régularisées.
+     *
+     * @return int
+     */
+    public function getCountRegulReversionClo()
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(r.numActeRevers) AS nbReversRegul
+             FROM App\Entity\RegulRevClo r
+             WHERE r.regulariser_y_n = 1'
+        )
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Nombre de réversions régularisés.
+     *
+     * @return int
      */
     public function getCountRegulReversion()
     {
@@ -219,9 +376,39 @@ class Statistiques
     }
 
     /**
-     * Nombre d'invalidités régularisées
+     * Nombre d'invalidités suspendues régularisées.
      *
-     * @return Integer
+     * @return int
+     */
+    public function getCountRegulInvaliditeSusp()
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(i.numActeInval) AS nbInvalRegul
+             FROM App\Entity\RegulInvSusp i
+             WHERE i.regulariser_y_n = 1'
+        )
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Nombre d'invalidités clôturées régularisées.
+     *
+     * @return int
+     */
+    public function getCountRegulInvaliditeClo()
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(i.numActeInval) AS nbInvalRegul
+             FROM App\Entity\RegulInvClo i
+             WHERE i.regulariser_y_n = 1'
+        )
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Nombre d'invalidités régularisées.
+     *
+     * @return int
      */
     public function getCountRegulInvalidite()
     {
@@ -234,7 +421,7 @@ class Statistiques
     }
 
     /**
-     * Nombres de users inscrits
+     * Nombres de users inscrits.
      *
      * @return void
      */
@@ -244,7 +431,7 @@ class Statistiques
     }
 
     /**
-     * Nombres d'équipes inscrites
+     * Nombres d'équipes inscrites.
      *
      * @return void
      */
@@ -253,5 +440,3 @@ class Statistiques
         return $this->manager->createQuery("SELECT COUNT(e) FROM App\Entity\Equipe e")->getSingleScalarResult();
     }
 }
-
-?>

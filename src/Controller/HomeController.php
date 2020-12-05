@@ -35,4 +35,23 @@ class HomeController extends AbstractController
             'regulInval' => $statistiques->getCountRegulInvalidite()
         ]);
     }
+
+    /**
+     * Permet de voir les statistiques de saisies de tous les utilisateurs
+     *
+     * @Route("/statsregul", name="statsregul")
+     *
+     * @param Statistiques $statistiques
+     * @return void
+     */
+    public function voirSaisieRegul(Statistiques $statistiques)
+    {
+        return $this->render("home/statsregul.html.twig", [
+            'userStats' => $statistiques->getUserStats('DESC'),
+            'regulRevSusp' => $statistiques->getCountRegulReversionSusp(),
+            'regulRevClo' => $statistiques->getCountRegulInvaliditeClo(),
+            'regulInvSusp' => $statistiques->getCountRegulInvaliditeSusp(),
+            'regulInvClo' => $statistiques->getCountRegulInvaliditeClo(),
+        ]);
+    }
 }
