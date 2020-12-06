@@ -40,8 +40,8 @@ class RegulInvSuspController extends AbstractController
         return $this->render('regul_invalidite/suspension/index.html.twig', [
             'inv' => $inv,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser()),
+            'compteur' => $statistiques->getCompteurInvaliditeSusp($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvaliditeSusp($this->getUser()),
         ]);
     }
 
@@ -51,7 +51,7 @@ class RegulInvSuspController extends AbstractController
      * @Route("/regul/inv/susp/{matricul}/edit", name="regul_inv_susp_edit")
      * @IsGranted("ROLE_USER")
      *
-     * @return void
+     * @return integer
      */
     public function updateInvalidite(RegulInvSusp $invalidite, EntityManagerInterface $manager, Request $request,
         Statistiques $statistiques)
@@ -79,8 +79,8 @@ class RegulInvSuspController extends AbstractController
         return $this->render('regul_invalidite/suspension/edit.html.twig', [
             'invalidite' => $invalidite,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser()),
+            'compteur' => $statistiques->getCompteurInvaliditeSusp($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvaliditeSusp($this->getUser()),
         ]);
     }
 }

@@ -41,8 +41,8 @@ class RegulRevCloController extends AbstractController
         return $this->render('regul_reversion/cloture/index.html.twig', [
             'ay' => $ay,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser()),
+            'compteur' => $statistiques->getCompteurReversionClo($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversionClo($this->getUser()),
         ]);
     }
 
@@ -81,8 +81,8 @@ class RegulRevCloController extends AbstractController
         return $this->render('regul_reversion/cloture/edit.html.twig', [
             'reversion' => $reversion,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser()),
+            'compteur' => $statistiques->getCompteurReversionClo($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversionClo($this->getUser()),
         ]);
     }
 }

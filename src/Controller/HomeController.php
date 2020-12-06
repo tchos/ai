@@ -47,7 +47,7 @@ class HomeController extends AbstractController
     public function voirSaisieRegul(Statistiques $statistiques)
     {
         return $this->render("home/statsregul.html.twig", [
-            'userStats' => $statistiques->getUserStats('DESC'),
+            'userStats' => $statistiques->getUserStatsContentieux('DESC'),
             'regulRevSusp' => $statistiques->getCountRegulReversionSusp(),
             'regulRevClo' => $statistiques->getCountRegulInvaliditeClo(),
             'regulInvSusp' => $statistiques->getCountRegulInvaliditeSusp(),

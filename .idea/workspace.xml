@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca79c96c-b6e2-4b03-9dc7-40e7bbf14423" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ai.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ai.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegulInvCloController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegulInvCloController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegulInvSuspController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegulInvSuspController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegulRevCloController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegulRevCloController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegulRevSuspController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegulRevSuspController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Statistiques.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Statistiques.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/statsregul.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/statsregul.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +34,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/Controller/RegulInvSuspController.php" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Controller/HomeController.php" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/Controller/RegulInvCloController.php" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/Service/Statistiques.php" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
@@ -187,7 +193,7 @@
       <workItem from="1607179671850" duration="1046000" />
       <workItem from="1607180776167" duration="1214000" />
       <workItem from="1607182031137" duration="140000" />
-      <workItem from="1607182184880" duration="12811000" />
+      <workItem from="1607182184880" duration="16244000" />
     </task>
     <servers />
   </component>

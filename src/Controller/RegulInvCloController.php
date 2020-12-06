@@ -40,8 +40,8 @@ class RegulInvCloController extends AbstractController
         return $this->render('regul_invalidite/cloture/index.html.twig', [
             'inv' => $inv,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser()),
+            'compteur' => $statistiques->getCompteurInvaliditeClo($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvaliditeClo($this->getUser()),
         ]);
     }
 
@@ -79,8 +79,8 @@ class RegulInvCloController extends AbstractController
         return $this->render('regul_invalidite/cloture/edit.html.twig', [
             'invalidite' => $invalidite,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurInvalidite($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurInvalidite($this->getUser()),
+            'compteur' => $statistiques->getCompteurInvaliditeClo($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurInvaliditeClo($this->getUser()),
         ]);
     }
 }

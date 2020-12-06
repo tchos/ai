@@ -76,8 +76,6 @@
                             <th class="text-center"><i class="fas fa-sort-up"></i> Rang</th>
                             <th><i class="fas fa-address-card"></i> Noms et prénoms</th>
                             <th class="text-center">Equipe</th>
-                            <th class="text-center"><i class="fas fa-coins"></i> Pensions de réversion</th>
-                            <th class="text-center"><i class="fas fa-coins"></i> Pensions d'invalidité</th>
                             <th class="text-center"><i class="fas fa-coins"></i> Total</th>
                         </tr>
                         </thead>
@@ -88,8 +86,6 @@
                                 <td class="text-center">{{ rang }}</td>
                                 <td>{{ statUser.fullName }}</td>
                                 <td class="text-center">{{ statUser.libelle }}</td>
-                                <td class="text-center">{{ statUser.nbReversion }}</td>
-                                <td class="text-center">{{ statUser.nbInvalidite }}</td>
                                 <td class="text-center">{{ statUser.total }}</td>
                             </tr>
                             {% set rang = rang + 1 %}

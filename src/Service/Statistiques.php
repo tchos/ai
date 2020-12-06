@@ -241,6 +241,31 @@ class Statistiques
      *
      * @return User
      */
+    public function getUserStatsContentieux($direction)
+    {
+        return $this->manager->createQuery(
+            'SELECT u.fullName AS fullName, e.libelle AS libelle,
+                COUNT(DISTINCT r.numActeRevers) +
+                COUNT(DISTINCT c.numActeRevers) +
+                COUNT(DISTINCT i.numActeInval) +
+                COUNT(DISTINCT v.numActeInval) AS total
+            FROM App\Entity\User u
+            JOIN u.regulRevSusps r
+            JOIN u.regulRevClos c
+            JOIN u.regulInvSusps i
+            JOIN u.regulInvClos v
+            JOIN u.equipe e
+            GROUP BY fullName
+            ORDER BY total '.$direction
+        )
+            ->getResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies par agents de saisie.
+     *
+     * @return User
+     */
     public function getUserStats($direction)
     {
         return $this->manager->createQuery(
@@ -277,6 +302,42 @@ class Statistiques
     }
 
     /**
+     * Retourne les statistiques de saisies de l'agent de saisie
+     * sur les pensions de réversion.
+     *
+     * @return int
+     */
+    public function getCompteurReversionSusp($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(r.numActeRevers) as compteur
+            FROM App\Entity\RegulRevSusp r
+            JOIN r.agentSaisie u
+            WHERE u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies de l'agent de saisie
+     * sur les pensions de réversion.
+     *
+     * @return int
+     */
+    public function getCompteurReversionClo($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(r.numActeRevers) as compteur
+            FROM App\Entity\RegulRevClo r
+            JOIN r.agentSaisie u
+            WHERE u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
      * Retourne les statistiques de saisies de l'agent de saisie du jour
      * sur les pensions de réversion.
      *
@@ -289,6 +350,42 @@ class Statistiques
             FROM App\Entity\Reversion r
             JOIN r.agentSaisie u
             WHERE CURRENT_DATE() <= r.dateSaisie AND u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies de l'agent de saisie du jour
+     * sur les pensions de réversion.
+     *
+     * @return int
+     */
+    public function getDailyCompteurReversionSusp($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(r.numActeRevers) as compteurDuJour
+            FROM App\Entity\RegulRevSusp r
+            JOIN r.agentSaisie u
+            WHERE CURRENT_DATE() <= r.dateRegul AND u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies de l'agent de saisie du jour
+     * sur les pensions de réversion.
+     *
+     * @return int
+     */
+    public function getDailyCompteurReversionClo($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(r.numActeRevers) as compteurDuJour
+            FROM App\Entity\RegulRevClo r
+            JOIN r.agentSaisie u
+            WHERE CURRENT_DATE() <= r.dateRegul AND u = :user'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -313,6 +410,42 @@ class Statistiques
     }
 
     /**
+     * Retourne les statistiques de saisies de l'agent de saisie
+     * sur les pensions d'invalidite.
+     *
+     * @return int
+     */
+    public function getCompteurInvaliditeSusp($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(i.numActeInval) as compteur
+            FROM App\Entity\RegulInvSusp i
+            JOIN i.agentSaisie u
+            WHERE u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies de l'agent de saisie
+     * sur les pensions d'invalidite.
+     *
+     * @return int
+     */
+    public function getCompteurInvaliditeClo($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(i.numActeInval) as compteur
+            FROM App\Entity\RegulInvClo i
+            JOIN i.agentSaisie u
+            WHERE u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
      * Retourne les statistiques de saisies de l'agent de saisie du jour
      * sur les pensions d'invalidite.
      *
@@ -325,6 +458,42 @@ class Statistiques
             FROM App\Entity\Invalidite i
             JOIN i.agentSaisie u
             WHERE CURRENT_DATE() <= i.dateSaisie AND u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies de l'agent de saisie du jour
+     * sur les pensions d'invalidite.
+     *
+     * @return int
+     */
+    public function getDailyCompteurInvaliditeSusp($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(i.numActeInval) as compteurDuJour
+            FROM App\Entity\RegulInvSusp i
+            JOIN i.agentSaisie u
+            WHERE CURRENT_DATE() <= i.dateRegul AND u = :user'
+        )
+            ->setParameter('user', $user)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne les statistiques de saisies de l'agent de saisie du jour
+     * sur les pensions d'invalidite.
+     *
+     * @return int
+     */
+    public function getDailyCompteurInvaliditeClo($user)
+    {
+        return $this->manager->createQuery(
+            'SELECT COUNT(i.numActeInval) as compteurDuJour
+            FROM App\Entity\RegulInvClo i
+            JOIN i.agentSaisie u
+            WHERE CURRENT_DATE() <= i.dateRegul AND u = :user'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();

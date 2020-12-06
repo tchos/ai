@@ -42,8 +42,8 @@ class RegulRevSuspController extends AbstractController
             'controller_name' => 'RegulRevSuspController',
             'ay' => $ay,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser()),
+            'compteur' => $statistiques->getCompteurReversionSusp($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversionSusp($this->getUser()),
         ]);
     }
 
@@ -84,8 +84,8 @@ class RegulRevSuspController extends AbstractController
         return $this->render('regul_reversion/suspension/editRevSusp.html.twig', [
             'reversion' => $reversion,
             'form' => $form->createView(),
-            'compteur' => $statistiques->getCompteurReversion($this->getUser()),
-            'compteurDuJour' => $statistiques->getDailyCompteurReversion($this->getUser()),
+            'compteur' => $statistiques->getCompteurReversionSusp($this->getUser()),
+            'compteurDuJour' => $statistiques->getDailyCompteurReversionSusp($this->getUser()),
         ]);
     }
 }
