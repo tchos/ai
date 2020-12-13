@@ -49,7 +49,7 @@ class HomeController extends AbstractController
         return $this->render("home/statsregul.html.twig", [
             'userStats' => $statistiques->getUserStatsContentieux('DESC'),
             'regulRevSusp' => $statistiques->getCountRegulReversionSusp(),
-            'regulRevClo' => $statistiques->getCountRegulInvaliditeClo(),
+            'regulRevClo' => $statistiques->getCountRegulReversionClo(),
             'regulInvSusp' => $statistiques->getCountRegulInvaliditeSusp(),
             'regulInvClo' => $statistiques->getCountRegulInvaliditeClo(),
         ]);

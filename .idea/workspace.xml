@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca79c96c-b6e2-4b03-9dc7-40e7bbf14423" name="Default Changelist" comment="" />
+    <list default="true" id="ca79c96c-b6e2-4b03-9dc7-40e7bbf14423" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/RegulInvClo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegulInvClo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/RegulInvSusp.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegulInvSusp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/RegulRevClo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegulRevClo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/RegulRevSusp.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegulRevSusp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RegulInvCloType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegulInvCloType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RegulInvSuspType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegulInvSuspType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RegulRevCloType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegulRevCloType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RegulRevSuspType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegulRevSuspType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Statistiques.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Statistiques.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/partials/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/header.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/regul_invalidite/cloture/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/regul_invalidite/cloture/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/regul_invalidite/suspension/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/regul_invalidite/suspension/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/regul_reversion/cloture/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/regul_reversion/cloture/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/regul_reversion/suspension/editRevSusp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/regul_reversion/suspension/editRevSusp.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +45,7 @@
     <setting file="file://$PROJECT_DIR$/src/Controller/RegulInvSuspController.php" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Controller/HomeController.php" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/Controller/RegulInvCloController.php" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/Form/RegulInvSuspType.php" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/Service/Statistiques.php" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -160,7 +178,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -185,6 +203,8 @@
       <workItem from="1607180776167" duration="1214000" />
       <workItem from="1607182031137" duration="140000" />
       <workItem from="1607182184880" duration="16488000" />
+      <workItem from="1607263834340" duration="1250000" />
+      <workItem from="1607798160076" duration="10965000" />
     </task>
     <servers />
   </component>

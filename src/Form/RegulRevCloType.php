@@ -42,6 +42,57 @@ class RegulRevCloType extends ApplicationType
                     'format' => 'dd/MM/yyyy',
                 ])
 
+            ->add('ministere', ChoiceType::class, [
+                'choices' => [
+                    'PRC' => 'PR',
+                    'MINRA' => 'MINRA',
+                    'SPM' => 'SPM',
+                    'DGSN' => 'DGSN',
+                    'MINREX' => 'MINREX',
+                    'MINREST' => 'MINREST',
+                    'MINATD' => 'MINATD',
+                    'MINAT' => 'MINAT',
+                    'MINJUSTICE' => 'MINJUSTICE',
+                    'MINMAP' => 'MINMAP',
+                    'MINDEF' => 'MINDEF',
+                    'MINAC' => 'MINAC',
+                    'MINEDUB' => 'MINEDUB',
+                    'MINEDUC' => 'MINEDUC',
+                    'MINSEP' => 'MINSEP',
+                    'MINCOM' => 'MINCOM',
+                    'MINESUP' => 'MINESUP',
+                    'MINRESI' => 'MINRESI',
+                    'MINFI' => 'MINFI',
+                    'MINEFI' => 'MINEFI',
+                    'MINCOMMERCE' => 'MINCOMMERCE',
+                    'MINEPAT' => 'MINEPAT',
+                    'MINTOUL' => 'MINTOUL',
+                    'MINESEC' => 'MINESEC',
+                    'MINJEC' => 'MINJEC',
+                    'MINEPDED' => 'MINEPDED',
+                    'MINEE' => 'MINEE',
+                    'MINFOF' => 'MINFOF',
+                    'MINEFOP' => 'MINEFOP',
+                    'MINTP' => 'MINTP',
+                    'MINHDU' => 'MINHDU',
+                    'MINPMEESA' => 'MINPMEESA',
+                    'MINSANTE' => 'MINSANTE',
+                    'MSP' => 'MSP',
+                    'MINTSS' => 'MINTSS',
+                    'MINAS' => 'MINAS',
+                    'MINPROFF' => 'MINPROFF',
+                    'MINPOSTEL' => 'MINPOSTEL',
+                    'MINT' => 'MINT',
+                    'MINFOPRA' => 'MINFOPRA',
+                    'MFPRA' => 'MFPRA',
+                    'MFP' => 'MFP',
+                    'PENSIONNES' => 'PENSIONNES',
+                    'CONSUPE' => 'CONSUPE',
+                    'COURSUP' => 'COURSUP',
+                    'TAMPON' => 'TAMPON',
+                ],
+            ])
+
             ->add('nomsAdActe', TextType::class,
                 $this->getConfiguration("Nom de l'ayant droit tel que porté sur l'acte",
                 'Ex: DIPANDA BOKENGUE BERTHE'))
@@ -63,6 +114,17 @@ class RegulRevCloType extends ApplicationType
                     'html5' => false,
                     'format' => 'dd/MM/yyyy',
                 ])
+
+            ->add('ptoPermanent_y_n', ChoiceType::class,
+                [
+                    'choices' => [
+                        'Non' => 0,
+                        'Oui' => 1,
+                    ],
+                    'label' => 'Pto permanente (Oui / Non) ?',
+                    'expanded' => true,
+                ])
+
         ;
     }
 

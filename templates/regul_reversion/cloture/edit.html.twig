@@ -41,6 +41,10 @@
                     {{ form_label(form.dateDeces, "Date de décès") }}
                     {{ form_widget(form.dateDeces, {'attr': {'placeholder': 'jj/mm/aaaa'}}) }}
                 </div>
+                <div class="col">
+                    {{ form_label(form.ministere, "Ministère où l'on a délivré l'acte") }}
+                    {{ form_widget(form.ministere) }}
+                </div>
             </div>
             <div class="row">
                 <div class="col">
@@ -56,6 +60,12 @@
                     {{ form_widget(form.dateNaisDerOrph, {'attr': {'placeholder': 'jj/mm/aaaa'}}) }}
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.ptoPermanent_y_n) }}
+                </div>
+            </div>
+
             <div class="alert alert-secondary clearfix">
                 <h3 class="alert-heading">Sauvegarder l'acte de réversion</h3>
                 <p>

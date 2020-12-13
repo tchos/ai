@@ -122,6 +122,21 @@ class RegulRevClo
     private $regulariser_y_n;
 
     /**
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $ministere;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $observation;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $ptoPermanent_y_n;
+
+    /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance pour
      * calculer automatiquement la date de régularisation, le résultat et l'agent de saisie.     *.
      *
@@ -330,6 +345,42 @@ class RegulRevClo
     public function setRegulariserYN(?bool $regulariser_y_n): self
     {
         $this->regulariser_y_n = $regulariser_y_n;
+
+        return $this;
+    }
+
+    public function getMinistere(): ?string
+    {
+        return $this->ministere;
+    }
+
+    public function setMinistere(?string $ministere): self
+    {
+        $this->ministere = $ministere;
+
+        return $this;
+    }
+
+    public function getObservation(): ?string
+    {
+        return $this->observation;
+    }
+
+    public function setObservation(?string $observation): self
+    {
+        $this->observation = $observation;
+
+        return $this;
+    }
+
+    public function getPtoPermanentYN(): ?bool
+    {
+        return $this->ptoPermanent_y_n;
+    }
+
+    public function setPtoPermanentYN(?bool $ptoPermanent_y_n): self
+    {
+        $this->ptoPermanent_y_n = $ptoPermanent_y_n;
 
         return $this;
     }

@@ -255,6 +255,7 @@ class Statistiques
             JOIN u.regulInvSusps i
             JOIN u.regulInvClos v
             JOIN u.equipe e
+            WHERE r.regulariser_y_n = 1
             GROUP BY fullName
             ORDER BY total '.$direction
         )
@@ -313,7 +314,7 @@ class Statistiques
             'SELECT COUNT(r.numActeRevers) as compteur
             FROM App\Entity\RegulRevSusp r
             JOIN r.agentSaisie u
-            WHERE u = :user'
+            WHERE u = :user AND r.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -331,7 +332,7 @@ class Statistiques
             'SELECT COUNT(r.numActeRevers) as compteur
             FROM App\Entity\RegulRevClo r
             JOIN r.agentSaisie u
-            WHERE u = :user'
+            WHERE u = :user AND r.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -367,7 +368,7 @@ class Statistiques
             'SELECT COUNT(r.numActeRevers) as compteurDuJour
             FROM App\Entity\RegulRevSusp r
             JOIN r.agentSaisie u
-            WHERE CURRENT_DATE() <= r.dateRegul AND u = :user'
+            WHERE CURRENT_DATE() <= r.dateRegul AND u = :user AND r.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -385,7 +386,7 @@ class Statistiques
             'SELECT COUNT(r.numActeRevers) as compteurDuJour
             FROM App\Entity\RegulRevClo r
             JOIN r.agentSaisie u
-            WHERE CURRENT_DATE() <= r.dateRegul AND u = :user'
+            WHERE CURRENT_DATE() <= r.dateRegul AND u = :user AND r.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -421,7 +422,7 @@ class Statistiques
             'SELECT COUNT(i.numActeInval) as compteur
             FROM App\Entity\RegulInvSusp i
             JOIN i.agentSaisie u
-            WHERE u = :user'
+            WHERE u = :user AND i.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -439,7 +440,7 @@ class Statistiques
             'SELECT COUNT(i.numActeInval) as compteur
             FROM App\Entity\RegulInvClo i
             JOIN i.agentSaisie u
-            WHERE u = :user'
+            WHERE u = :user AND i.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -457,7 +458,7 @@ class Statistiques
             'SELECT COUNT(i.numActeInval) as compteurDuJour
             FROM App\Entity\Invalidite i
             JOIN i.agentSaisie u
-            WHERE CURRENT_DATE() <= i.dateSaisie AND u = :user'
+            WHERE CURRENT_DATE() <= i.dateSaisie AND u = :user AND i.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -475,7 +476,7 @@ class Statistiques
             'SELECT COUNT(i.numActeInval) as compteurDuJour
             FROM App\Entity\RegulInvSusp i
             JOIN i.agentSaisie u
-            WHERE CURRENT_DATE() <= i.dateRegul AND u = :user'
+            WHERE CURRENT_DATE() <= i.dateRegul AND u = :user AND i.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();
@@ -493,7 +494,7 @@ class Statistiques
             'SELECT COUNT(i.numActeInval) as compteurDuJour
             FROM App\Entity\RegulInvClo i
             JOIN i.agentSaisie u
-            WHERE CURRENT_DATE() <= i.dateRegul AND u = :user'
+            WHERE CURRENT_DATE() <= i.dateRegul AND u = :user AND i.regulariser_y_n = 1'
         )
             ->setParameter('user', $user)
             ->getSingleScalarResult();

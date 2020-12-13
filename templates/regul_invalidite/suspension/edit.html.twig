@@ -28,6 +28,10 @@
                 <div class="col">
                     {{ form_row(form.typeActe) }}
                 </div>
+                <div class="col">
+                    {{ form_label(form.ministere, "Ministère où l'on a délivré l'acte") }}
+                    {{ form_widget(form.ministere) }}
+                </div>
             </div>
             <div class="row">
                 <div class="col">
@@ -35,16 +39,21 @@
                 </div>
                 <div class="col">
                     {{ form_label(form.dateInvalidite, "Date d'effet de l'invalidité") }}
-                    {{ form_widget(form.dateInvalidite) }}
+                    {{ form_widget(form.dateInvalidite, {'attr': {'placeholder': 'jj/mm/aaaa'}}) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     {{ form_label(form.dateNaisDerOrph, "Date de naissance du dernier enfant mineur") }}
-                    {{ form_widget(form.dateNaisDerOrph) }}
+                    {{ form_widget(form.dateNaisDerOrph, {'attr': {'placeholder': 'jj/mm/aaaa'}}) }}
                 </div>
                 <div class="col">
                     {{ form_row(form.dateSignature) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.ptoPermanent_y_n) }}
                 </div>
             </div>
             
