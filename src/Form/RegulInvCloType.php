@@ -1,10 +1,13 @@
-<?php
+<?php /** @noinspection ALL */
+
+/** @noinspection ALL */
 
 namespace App\Form;
 
 use App\Entity\RegulInvClo;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -107,6 +110,15 @@ class RegulInvCloType extends ApplicationType
                     'label' => 'Pto permanente (Oui / Non) ?',
                     'expanded' => true,
                 ])
+            ->add('telephone', TextType::class,
+                $this->getConfiguration("Numéro de téléphone à contacter en cas de problème",
+                    'Ex: 677669148'))
+            ->add('telephone', TextType::class,
+                $this->getConfiguration("Numéro de téléphone à contacter en cas de problème",
+                    'Ex: 677669148'))
+            ->add('observation', TextareaType::class, [
+                'attr' => ['class' => 'tinymce'],
+            ])
         ;
     }
 

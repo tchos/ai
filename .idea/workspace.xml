@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ca79c96c-b6e2-4b03-9dc7-40e7bbf14423" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/RegulInvClo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegulInvClo.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/RegulInvSusp.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegulInvSusp.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/RegulRevClo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegulRevClo.php" afterDir="false" />
@@ -15,8 +14,6 @@
       <change beforePath="$PROJECT_DIR$/src/Form/RegulInvSuspType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegulInvSuspType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/RegulRevCloType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegulRevCloType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/RegulRevSuspType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegulRevSuspType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Statistiques.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Statistiques.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/partials/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/header.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/regul_invalidite/cloture/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/regul_invalidite/cloture/edit.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/regul_invalidite/suspension/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/regul_invalidite/suspension/edit.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/regul_reversion/cloture/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/regul_reversion/cloture/edit.html.twig" afterDir="false" />
@@ -204,7 +201,9 @@
       <workItem from="1607182031137" duration="140000" />
       <workItem from="1607182184880" duration="16488000" />
       <workItem from="1607263834340" duration="1250000" />
-      <workItem from="1607798160076" duration="10965000" />
+      <workItem from="1607798160076" duration="11308000" />
+      <workItem from="1608118864345" duration="1279000" />
+      <workItem from="1608400413724" duration="5013000" />
     </task>
     <servers />
   </component>

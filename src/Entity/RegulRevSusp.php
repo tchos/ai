@@ -152,6 +152,11 @@ class RegulRevSusp
      */
     private $ptoPermanent_y_n;
 
+    /**
+     * @ORM\Column(type="string", length=9, nullable=true)
+     */
+    private $telephone;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -381,6 +386,18 @@ class RegulRevSusp
     public function setPtoPermanentYN(?bool $ptoPermanent_y_n): self
     {
         $this->ptoPermanent_y_n = $ptoPermanent_y_n;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }

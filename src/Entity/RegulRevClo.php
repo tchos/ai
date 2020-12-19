@@ -137,6 +137,11 @@ class RegulRevClo
     private $ptoPermanent_y_n;
 
     /**
+     * @ORM\Column(type="string", length=9, nullable=true)
+     */
+    private $telephone;
+
+    /**
      * CallBack appelé à chaque fois que l'on veut enregistrer un acte de naissance pour
      * calculer automatiquement la date de régularisation, le résultat et l'agent de saisie.     *.
      *
@@ -381,6 +386,18 @@ class RegulRevClo
     public function setPtoPermanentYN(?bool $ptoPermanent_y_n): self
     {
         $this->ptoPermanent_y_n = $ptoPermanent_y_n;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
